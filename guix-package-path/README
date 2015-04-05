@@ -1,0 +1,9 @@
+This directory was made specifically for "GUIX_PACKAGE_PATH" environment
+variable.  It contains a symlink 'al/guix/packages' which points to my
+package directory.  Thus it contains my packages (and _only_ the
+packages) placed in a proper hierarchy.
+
+I didn't set "GUIX_PACKAGE_PATH" to a directory with all my guile
+modules (which includes the (al guix …) stuff) as Guix will traverse all
+those modules and all variables inside to find the packages, which is
+long and may find unwanted things.
