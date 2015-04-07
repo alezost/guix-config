@@ -11,6 +11,7 @@
  (gnu services ssh)
  (gnu services lirc)
  (al places)
+ (al files)
  (al guix services x)
  (al guix services linux))
 
@@ -66,6 +67,8 @@
           (group "users")
           (supplementary-groups
            '("wheel" "audio" "video" "lp")))))
+
+  (sudoers (read-file (config-file "sudo/sudoers")))
 
   (packages
    (cons*
