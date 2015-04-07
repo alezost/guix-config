@@ -1,0 +1,5 @@
+-*- mode: org; -*-
+
+This repository contains my system configuration, packages, services and
+other related stuff for [[http://www.gnu.org/software/guix/][GNU Guix]].  The code of my OS config relies on
+some of my [[https://gitlab.com/alezost/guile-modules][guile-modules]].
