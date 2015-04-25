@@ -43,9 +43,22 @@
       (documentation "Remove some useless modules from the kernel.")
       (provision '(rmmod))
       (start #~(lambda _
+                 ;; FIXME Why the hell it doesn't work on boot (not
+                 ;; "modprobe", not even "rmmod")?  However, it
+                 ;; works after "deco restart rmmod".
+
+                 ;; (setenv "LINUX_MODULE_DIRECTORY"
+                 ;;         "/run/booted-system/kernel/lib/modules")
                  (zero? (apply system*
                                (string-append #$kmod "/bin/modprobe")
-                               "--verbose" "--remove" '#$modules))))
+                               "--verbose" "--remove" '#$modules))
+
+                 ;; (let ((rmmod (string-append #$kmod "/bin/rmmod")))
+                 ;;   (for-each (lambda (module)
+                 ;;               (system* rmmod module))
+                 ;;             '#$modules)
+                 ;;   #t)
+                 ))
       (respawn? #f)))))
 
 (define (console-keymap-service file)
