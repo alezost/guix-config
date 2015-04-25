@@ -12,7 +12,6 @@
  (gnu services lirc)
  (al places)
  (al files)
- (al guix services x)
  (al guix services linux))
 
 (operating-system
@@ -83,8 +82,6 @@
       (rmmod-service "pcspkr")
       (console-keymap-service (config-file "kbd/dvorak-alt.map"))
       (keycodes-from-file-service (config-file "kbd/scancodes-msmult"))
-      (xorg-service #:modules (list xf86-video-sis xf86-input-evdev)
-                    #:config-dir (config-file "X/xorg.conf"))
 
       (console-font-service "tty1")
       (console-font-service "tty2")
