@@ -14,8 +14,11 @@
  (al files)
  (al guix services linux))
 
+(define %user-name "al")
+(define %host-name "leviafan")
+
 (operating-system
-  (host-name "leviafan")
+  (host-name %host-name)
   (timezone "Europe/Moscow")
 
   (locale "en_US.utf8")
@@ -59,10 +62,10 @@
 
   (users
    (list (user-account
-          (name "al")
+          (name %user-name)
           (uid 1000)
           (comment "Alex Kost")
-          (home-directory "/home/al")
+          (home-directory (string-append "/home/" %user-name))
           (group "users")
           (supplementary-groups
            '("wheel" "audio" "video" "lp")))))
