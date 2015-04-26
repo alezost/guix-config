@@ -93,7 +93,7 @@
       (console-font-service "tty5")
       (console-font-service "tty6")
 
-      (mingetty-service "tty1" #:motd motd)
+      (mingetty-service "tty1" #:motd motd #:auto-login %user-name)
       (mingetty-service "tty2" #:motd motd)
       (mingetty-service "tty3" #:motd motd)
       (mingetty-service "tty4" #:motd motd)
