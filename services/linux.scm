@@ -31,7 +31,6 @@
   #:use-module (guix gexp)
   #:use-module (gnu packages linux)
   #:export (rmmod-service
-            console-keymap-service
             keycodes-service
             keycodes-from-file-service))
 
@@ -59,18 +58,6 @@
                  ;;             '#$modules)
                  ;;   #t)
                  ))
-      (respawn? #f)))))
-
-(define (console-keymap-service file)
-  "Load console keymap from FILE using 'loadkeys' command."
-  (with-monad %store-monad
-    (return
-     (service
-      (documentation "Setup console keymap (loadkeys).")
-      (provision '(console-keymap))
-      (start #~(lambda _
-                 (zero? (system* (string-append #$kbd "/bin/loadkeys")
-                                 #$file))))
       (respawn? #f)))))
 
 (define (keycodes-service . args)
