@@ -6,7 +6,7 @@
  (gnu packages linux)
  (gnu services base)
  (gnu services networking)
- (gnu services dbus)
+ (gnu services desktop)
  (gnu services ssh)
  (gnu services lirc)
  (al places)
