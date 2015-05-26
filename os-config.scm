@@ -4,7 +4,6 @@
  (gnu system locale)
  (gnu system grub)
  (gnu packages linux)
- (gnu packages xorg)
  (gnu services base)
  (gnu services networking)
  (gnu services dbus)
