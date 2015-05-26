@@ -58,7 +58,7 @@
             (type "ext2"))
           %base-file-systems))
 
-  (swap-devices '("/dev/sda6"))
+  (swap-devices '("/dev/disk/by-label/swap"))
 
   (users
    (list (user-account
