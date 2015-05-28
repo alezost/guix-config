@@ -71,6 +71,8 @@
 
   (sudoers (read-file (config-file "sudo/sudoers")))
 
+  (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
+
   (packages
    (cons*
     iproute
