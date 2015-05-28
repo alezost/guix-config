@@ -4,6 +4,7 @@
  (gnu system locale)
  (gnu system grub)
  (gnu packages linux)
+ (gnu packages certs)
  (gnu services base)
  (gnu services networking)
  (gnu services desktop)
@@ -83,9 +84,9 @@
   (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
   (packages
-   (cons*
-    iproute
-    %base-packages))
+   (cons* iproute
+          nss-certs
+          %base-packages))
 
   (services
    (let ((motd (text-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
