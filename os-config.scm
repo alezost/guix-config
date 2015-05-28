@@ -110,10 +110,10 @@
       (mingetty-service "tty5" #:motd motd)
       (mingetty-service "tty6" #:motd motd)
 
-      ;; (dhcp-client-service)
-      (static-networking-service "enp0s11" "192.168.1.32"
-                                 #:gateway "192.168.1.1"
-                                 #:name-servers '("77.88.8.8"))
+      (dhcp-client-service)
+      ;; (static-networking-service "enp0s7" "192.168.1.32"
+      ;;                            #:gateway "192.168.1.1"
+      ;;                            #:name-servers '("77.88.8.8"))
       (static-networking-service "lo" "127.0.0.1"
                                  #:provision '(loopback))
 
