@@ -16,6 +16,10 @@
 (define %user-name "al")
 (define %host-name "leviafan")
 
+(define %linux-modules
+  ;; 'sata_nv' is required for my HDD to be recognized.
+  '("sata_nv"))
+
 (operating-system
   (host-name %host-name)
   (timezone "Europe/Moscow")
@@ -30,6 +34,11 @@
   (bootloader
    (grub-configuration (device "/dev/sda")
                        (theme (grub-theme))))
+
+  (initrd (lambda (fs . args)
+            (apply base-initrd fs
+                   #:extra-modules %linux-modules
+                   args)))
 
   (file-systems
    (cons* (file-system
