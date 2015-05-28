@@ -70,14 +70,15 @@
   (swap-devices '("/dev/disk/by-label/swap"))
 
   (users
-   (list (user-account
-          (name %user-name)
-          (uid 1000)
-          (comment "Alex Kost")
-          (home-directory (string-append "/home/" %user-name))
-          (group "users")
-          (supplementary-groups
-           '("wheel" "audio" "video" "lp")))))
+   (cons* (user-account
+           (name %user-name)
+           (uid 1000)
+           (comment "Alex Kost")
+           (home-directory (string-append "/home/" %user-name))
+           (group "users")
+           (supplementary-groups
+            '("wheel" "audio" "video" "lp")))
+          %base-user-accounts))
 
   (sudoers (read-file (config-file "sudo/sudoers")))
 
