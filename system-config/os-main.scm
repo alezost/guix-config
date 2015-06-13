@@ -80,7 +80,7 @@
             '("wheel" "audio" "video" "lp")))
           %base-user-accounts))
 
-  (sudoers (read-file (config-file "sudo/sudoers")))
+  (sudoers (local-file (config-file "etc/sudoers")))
 
   (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
@@ -93,10 +93,13 @@
    (let ((motd (text-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
      (list
       (lirc-service #:device "name=i2c*" #:driver "devinput"
-                    #:config-file (config-file "lirc/lirc.conf"))
+                    #:config-file (local-file
+                                   (config-file "lirc/devinput.conf")))
       (rmmod-service "pcspkr")
-      (console-keymap-service (config-file "kbd/dvorak-alt.map"))
-      (keycodes-from-file-service (config-file "kbd/scancodes-msmult"))
+      (console-keymap-service (local-file
+                               (config-file "kbd/dvorak-alt.map")))
+      (keycodes-from-file-service (local-file
+                                   (config-file "kbd/scancodes-msmult")))
 
       (console-font-service "tty1")
       (console-font-service "tty2")
