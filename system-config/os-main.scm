@@ -81,6 +81,7 @@
           %base-user-accounts))
 
   (sudoers (local-file (config-file "etc/sudoers")))
+  (hosts-file (local-file (config-file "etc/hosts")))
 
   (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
