@@ -21,111 +21,114 @@
   ;; 'sata_nv' is required for my HDD to be recognized.
   '("sata_nv"))
 
-(operating-system
-  (host-name %host-name)
-  (timezone "Europe/Moscow")
+(define os
+  (operating-system
+    (host-name %host-name)
+    (timezone "Europe/Moscow")
 
-  (locale "en_US.utf8")
-  (locale-definitions
-   (list (locale-definition (source "en_US")
-                            (name   "en_US.utf8"))
-         (locale-definition (source "ru_RU")
-                            (name   "ru_RU.utf8"))))
+    (locale "en_US.utf8")
+    (locale-definitions
+     (list (locale-definition (source "en_US")
+                              (name   "en_US.utf8"))
+           (locale-definition (source "ru_RU")
+                              (name   "ru_RU.utf8"))))
 
-  (bootloader
-   (grub-configuration (device "/dev/sda")
-                       (theme (grub-theme))))
+    (bootloader
+     (grub-configuration (device "/dev/sda")
+                         (theme (grub-theme))))
 
-  (initrd (lambda (fs . args)
-            (apply base-initrd fs
-                   #:extra-modules %linux-modules
-                   args)))
+    (initrd (lambda (fs . args)
+              (apply base-initrd fs
+                     #:extra-modules %linux-modules
+                     args)))
 
-  (file-systems
-   (cons* (file-system
-            (device "guix")
-            (title 'label)
-            (mount-point "/")
-            (type "ext4"))
-          (file-system
-            (device "storage")
-            (title 'label)
-            (mount-point "/mnt/storage")
-            (create-mount-point? #t)
-            (type "ext4"))
-          (file-system
-            (device "arch")
-            (title 'label)
-            (mount-point "/mnt/arch")
-            (create-mount-point? #t)
-            (type "ext4"))
-          (file-system
-            (device "boot")
-            (title 'label)
-            (mount-point "/mnt/boot")
-            (create-mount-point? #t)
-            (type "ext2"))
-          %base-file-systems))
+    (file-systems
+     (cons* (file-system
+              (device "guix")
+              (title 'label)
+              (mount-point "/")
+              (type "ext4"))
+            (file-system
+              (device "storage")
+              (title 'label)
+              (mount-point "/mnt/storage")
+              (create-mount-point? #t)
+              (type "ext4"))
+            (file-system
+              (device "arch")
+              (title 'label)
+              (mount-point "/mnt/arch")
+              (create-mount-point? #t)
+              (type "ext4"))
+            (file-system
+              (device "boot")
+              (title 'label)
+              (mount-point "/mnt/boot")
+              (create-mount-point? #t)
+              (type "ext2"))
+            %base-file-systems))
 
-  (swap-devices '("/dev/disk/by-label/swap"))
+    (swap-devices '("/dev/disk/by-label/swap"))
 
-  (users
-   (cons* (user-account
-           (name %user-name)
-           (uid 1000)
-           (comment "Alex Kost")
-           (home-directory (string-append "/home/" %user-name))
-           (group "users")
-           (supplementary-groups
-            '("wheel" "audio" "video" "lp")))
-          %base-user-accounts))
+    (users
+     (cons* (user-account
+             (name %user-name)
+             (uid 1000)
+             (comment "Alex Kost")
+             (home-directory (string-append "/home/" %user-name))
+             (group "users")
+             (supplementary-groups
+              '("wheel" "audio" "video" "lp")))
+            %base-user-accounts))
 
-  (sudoers-file (local-file (config-file "etc/sudoers")))
-  (hosts-file (local-file (config-file "etc/hosts")))
+    (sudoers-file (local-file (config-file "etc/sudoers")))
+    (hosts-file (local-file (config-file "etc/hosts")))
 
-  (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
+    (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
-  (packages
-   (cons* iproute
-          nss-certs
-          %base-packages))
+    (packages
+     (cons* iproute
+            nss-certs
+            %base-packages))
 
-  (services
-   (let ((motd (text-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
-     (list
-      (lirc-service #:device "name=i2c*" #:driver "devinput"
-                    #:config-file (local-file
-                                   (config-file "lirc/devinput.conf")))
-      (rmmod-service "pcspkr")
-      (console-keymap-service (local-file
-                               (config-file "kbd/dvorak-alt.map")))
-      (keycodes-from-file-service (local-file
-                                   (config-file "kbd/scancodes-msmult")))
+    (services
+     (let ((motd (text-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
+       (list
+        (lirc-service #:device "name=i2c*" #:driver "devinput"
+                      #:config-file (local-file
+                                     (config-file "lirc/devinput.conf")))
+        (rmmod-service "pcspkr")
+        (console-keymap-service (local-file
+                                 (config-file "kbd/dvorak-alt.map")))
+        (keycodes-from-file-service (local-file
+                                     (config-file "kbd/scancodes-msmult")))
 
-      (console-font-service "tty1")
-      (console-font-service "tty2")
-      (console-font-service "tty3")
-      (console-font-service "tty4")
-      (console-font-service "tty5")
-      (console-font-service "tty6")
+        (console-font-service "tty1")
+        (console-font-service "tty2")
+        (console-font-service "tty3")
+        (console-font-service "tty4")
+        (console-font-service "tty5")
+        (console-font-service "tty6")
 
-      (mingetty-service "tty1" #:motd motd #:auto-login %user-name)
-      (mingetty-service "tty2" #:motd motd)
-      (mingetty-service "tty3" #:motd motd)
-      (mingetty-service "tty4" #:motd motd)
-      (mingetty-service "tty5" #:motd motd)
-      (mingetty-service "tty6" #:motd motd)
+        (mingetty-service "tty1" #:motd motd #:auto-login %user-name)
+        (mingetty-service "tty2" #:motd motd)
+        (mingetty-service "tty3" #:motd motd)
+        (mingetty-service "tty4" #:motd motd)
+        (mingetty-service "tty5" #:motd motd)
+        (mingetty-service "tty6" #:motd motd)
 
-      (dhcp-client-service)
-      ;; (static-networking-service "enp0s7" "192.168.1.32"
-      ;;                            #:gateway "192.168.1.1"
-      ;;                            #:name-servers '("77.88.8.8"))
-      (static-networking-service "lo" "127.0.0.1"
-                                 #:provision '(loopback))
+        (dhcp-client-service)
+        ;; (static-networking-service "enp0s7" "192.168.1.32"
+        ;;                            #:gateway "192.168.1.1"
+        ;;                            #:name-servers '("77.88.8.8"))
+        (static-networking-service "lo" "127.0.0.1"
+                                   #:provision '(loopback))
 
-      (dbus-service '())
-      (lsh-service)
-      (syslog-service #:config-file (config-file "syslog/syslog.conf"))
-      (guix-service)
-      (nscd-service)
-      (udev-service #:rules (list lvm2 fuse alsa-utils))))))
+        (dbus-service '())
+        (lsh-service)
+        (syslog-service #:config-file (config-file "syslog/syslog.conf"))
+        (guix-service)
+        (nscd-service)
+        (udev-service #:rules (list lvm2 fuse alsa-utils)))))))
+
+os
