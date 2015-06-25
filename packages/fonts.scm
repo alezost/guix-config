@@ -34,13 +34,13 @@
 (define-public font-symbola
   (package
     (name "font-symbola")
-    (version "7.21")
+    (version "8.00")
     (source (origin
               (method url-fetch)
               (uri "http://users.teilar.gr/~g1951d/Symbola.zip")
               (sha256
                (base32
-                "0sqmvq8c8wn4xq0p25gd2jfyjqi8jhiycqah19wzq1gqkaaw94nq"))))
+                "07bczpl3vqdpg2gakfddhzzgpb6v2wpasv7rwqxkyg9yd9lmbr0s"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
