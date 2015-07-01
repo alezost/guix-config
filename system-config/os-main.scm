@@ -18,8 +18,9 @@
 (define %host-name "leviafan")
 
 (define %linux-modules
-  ;; 'sata_nv' is required for my HDD to be recognized.
-  '("sata_nv"))
+  '("sata_nv"           ; for my HDD to be recognized
+    "fuse"              ; for sshfs
+    ))
 
 (define os
   (operating-system
