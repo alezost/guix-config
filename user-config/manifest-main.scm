@@ -169,6 +169,7 @@
 
 ;; (->manifest build-guix-packages)
 ;; (->manifest gui+emacs-packages)
+;; (->manifest emacs-packages)
 ;; (->manifest reliable-packages)
 (->manifest build-guix-packages reliable-packages)
 ;; (->manifest build-guix-packages reliable-packages unreliable-packages)
