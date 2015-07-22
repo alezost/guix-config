@@ -1,6 +1,7 @@
-;; (use-modules (guix profiles) (gnu))
-
-(use-modules (srfi srfi-1))
+(use-modules
+ (gnu)
+ (guix profiles)
+ (srfi srfi-1))
 
 (define-syntax-rule (module-packages module package ...)
   (list (@ module package)
