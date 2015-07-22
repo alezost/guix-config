@@ -27,7 +27,7 @@
 
 (define build-common-packages
   (guix-packages
-   (commencement gcc-toolchain-5.1)
+   (commencement gcc-toolchain-5)
    (base gnu-make)
    (autotools autoconf
               automake)
