@@ -48,6 +48,7 @@
    (guix-packages
     (guile guile-2.0
            guile-json)
+    (tls gnutls)
     (gnupg libgcrypt)
     (graphviz graphviz)
     (man help2man)
@@ -85,10 +86,14 @@
 
 
 (define emacs-packages
-  (guix-packages
-   (emacs emacs
-          emacs-w3m
-          emacs-wget)))
+  (append
+   (guix-packages
+    (emacs emacs
+           emacs-pdf-tools
+           emacs-w3m
+           emacs-wget))
+   (my-packages
+    (emacs emms-minimal))))
 
 (define font-packages
   (guix-packages
@@ -110,6 +115,7 @@
          zathura-pdf-poppler
          zathura-djvu)
     (imagemagick imagemagick)
+    (audio sox)
     (video mplayer
            mpv
            youtube-dl)
@@ -133,8 +139,11 @@
    (lirc lirc)
    (ssh openssh)
    (bittorrent rtorrent)
+   (zip unzip)
+   (dunst dunst)
 
    (version-control git
+                    (git "send-email")
                     git-manpages)
 
    (guile guile-2.0)
