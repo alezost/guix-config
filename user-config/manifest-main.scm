@@ -3,8 +3,15 @@
  (guix profiles)
  (srfi srfi-1))
 
+(define-syntax module-package
+  (syntax-rules ()
+    ((_ module (package output))
+     (list (@ module package) output))
+    ((_ module package)
+     (@ module package))))
+
 (define-syntax-rule (module-packages module package ...)
-  (list (@ module package)
+  (list (module-package module package)
         ...))
 
 (define-syntax-rule (modules-packages (module package ...) ...)
