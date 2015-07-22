@@ -148,7 +148,7 @@
 (define gui+emacs-packages
   (append xorg-packages
           xorg-friends-packages
-          (guix-packages (emacs emacs))))
+          emacs-packages))
 
 (define reliable-packages
   ;; Everything reliable without "build".
