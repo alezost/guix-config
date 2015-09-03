@@ -66,7 +66,7 @@
               (title 'label)
               (mount-point "/mnt/boot")
               (create-mount-point? #t)
-              (type "ext2"))
+              (type "ext4"))
             %base-file-systems))
 
     (swap-devices '("/dev/disk/by-label/swap"))
