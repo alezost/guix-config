@@ -91,7 +91,9 @@
     (emacs emacs
            emacs-pdf-tools
            emacs-w3m
-           emacs-wget))
+           emacs-wget
+           magit
+           git-modes))
    (my-packages
     (emacs emms-minimal))))
 
@@ -136,6 +138,7 @@
    (w3m w3m)
    (xml libxslt)
    (wget wget)
+   (admin netcat)
    (lirc lirc)
    (ssh openssh)
    (bittorrent rtorrent)
@@ -147,6 +150,7 @@
                     git-manpages)
 
    (guile guile-2.0)
+   (plotutils guile-charting)
    (python python-wrapper)
 
    (aspell aspell
