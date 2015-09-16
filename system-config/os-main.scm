@@ -18,8 +18,9 @@
 (define %host-name "leviafan")
 
 (define %linux-modules
-  '("sata_nv"           ; for my HDD to be recognized
-    "fuse"              ; for sshfs
+  '("fuse"              ; for sshfs
+    "sata_nv"           ; for my HDD to be recognized
+    "snd-seq"           ; for MIDI-keyboard
     ))
 
 (define os
