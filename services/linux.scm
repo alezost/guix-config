@@ -26,19 +26,17 @@
 
 (define-module (al guix services linux)
   #:use-module (gnu services)
-  #:use-module (guix monads)
-  #:use-module (guix store)
+  #:use-module (gnu services dmd)
   #:use-module (guix gexp)
   #:use-module (gnu packages linux)
   #:export (rmmod-service
             keycodes-service
             keycodes-from-file-service))
 
-(define (rmmod-service . modules)
-  "Remove MODULES from the kernel."
-  (with-monad %store-monad
-    (return
-     (service
+(define rmmod-service-type
+  (dmd-service-type
+   (lambda (modules)
+     (dmd-service
       (documentation "Remove some useless modules from the kernel.")
       (provision '(rmmod))
       (start #~(lambda _
@@ -60,12 +58,14 @@
                  ))
       (respawn? #f)))))
 
-(define (keycodes-service . args)
-  "Map scancodes to keycodes using 'setkeycodes' command.
-ARGS are passed to 'setkeycodes'."
-  (with-monad %store-monad
-    (return
-     (service
+(define (rmmod-service . modules)
+  "Remove MODULES from the kernel."
+  (service rmmod-service-type modules))
+
+(define keycodes-service-type
+  (dmd-service-type
+   (lambda (args)
+     (dmd-service
       (documentation "Map some missing scancodes (setkeycodes).")
       (provision '(keycodes))
       (start #~(lambda _
@@ -74,13 +74,15 @@ ARGS are passed to 'setkeycodes'."
                                #$args))))
       (respawn? #f)))))
 
-(define (keycodes-from-file-service file)
+(define (keycodes-service . args)
   "Map scancodes to keycodes using 'setkeycodes' command.
-Read a list of arguments that should be passed to 'setkeycodes' from a
-scheme FILE."
-  (with-monad %store-monad
-    (return
-     (service
+ARGS are passed to 'setkeycodes'."
+  (service keycodes-service-type args))
+
+(define keycodes-from-file-service-type
+  (dmd-service-type
+   (lambda (file)
+     (dmd-service
       (documentation "Map some missing scancodes (setkeycodes).")
       (provision '(keycodes))
       (start #~(lambda _
@@ -91,5 +93,11 @@ scheme FILE."
                                  (string-append #$kbd "/bin/setkeycodes")
                                  args)))))
       (respawn? #f)))))
+
+(define (keycodes-from-file-service file)
+  "Map scancodes to keycodes using 'setkeycodes' command.
+Read a list of arguments that should be passed to 'setkeycodes' from a
+scheme FILE."
+  (service keycodes-from-file-service-type file))
 
 ;;; linux.scm ends here

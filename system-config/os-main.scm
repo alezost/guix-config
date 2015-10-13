@@ -7,6 +7,7 @@
  (gnu packages certs)
  (gnu services base)
  (gnu services networking)
+ (gnu services dbus)
  (gnu services desktop)
  (gnu services ssh)
  (gnu services lirc)
@@ -94,7 +95,7 @@
             %base-packages))
 
     (services
-     (let ((motd (text-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
+     (let ((motd (plain-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
        (list
         (lirc-service #:device "name=i2c*" #:driver "devinput"
                       #:config-file (local-file
@@ -112,12 +113,19 @@
         (console-font-service "tty5")
         (console-font-service "tty6")
 
-        (mingetty-service "tty1" #:motd motd #:auto-login %user-name)
-        (mingetty-service "tty2" #:motd motd)
-        (mingetty-service "tty3" #:motd motd)
-        (mingetty-service "tty4" #:motd motd)
-        (mingetty-service "tty5" #:motd motd)
-        (mingetty-service "tty6" #:motd motd)
+        (mingetty-service (mingetty-configuration
+                           (tty "tty1") (motd motd)
+                           (auto-login %user-name)))
+        (mingetty-service (mingetty-configuration
+                           (tty "tty2") (motd motd)))
+        (mingetty-service (mingetty-configuration
+                           (tty "tty3") (motd motd)))
+        (mingetty-service (mingetty-configuration
+                           (tty "tty4") (motd motd)))
+        (mingetty-service (mingetty-configuration
+                           (tty "tty5") (motd motd)))
+        (mingetty-service (mingetty-configuration
+                           (tty "tty6") (motd motd)))
 
         (dhcp-client-service)
         ;; (static-networking-service "enp0s7" "192.168.1.32"
@@ -126,7 +134,7 @@
         (static-networking-service "lo" "127.0.0.1"
                                    #:provision '(loopback))
 
-        (dbus-service '())
+        (dbus-service)
         (lsh-service)
         (syslog-service #:config-file (config-file "syslog/syslog.conf"))
         (guix-service)

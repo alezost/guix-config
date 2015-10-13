@@ -26,11 +26,43 @@
 
 (define-module (al guix services x)
   #:use-module (gnu services)
-  #:use-module (guix monads)
-  #:use-module (guix store)
+  #:use-module (gnu services dmd)
   #:use-module (guix gexp)
+  #:use-module (guix records)
   #:use-module (gnu packages xorg)
+  #:use-module (ice-9 match)
   #:export (xorg-service))
+
+(define-record-type* <xorg-config>
+  xorg-config make-xorg-config
+  xorg-config?
+  (dir xorg-config-dir)
+  (display xorg-config-display)
+  (vt xorg-config-vt)
+  (modules xorg-config-modules)
+  (extra-options xorg-config-extra-options))
+
+(define xorg-service-type
+  (dmd-service-type
+   (match-lambda
+     (($ <xorg-config> dir display vt modules extra-options)
+      (let ((modules (cons xorg-server modules)))
+        (dmd-service
+         (documentation (format #f "Xorg server (display ~a)" display))
+         (provision (list (symbol-append 'x (string->symbol display))))
+         (requirement '(user-processes udev))
+         (start
+          #~(make-forkexec-constructor
+             (append (list (string-append #$xorg-server "/bin/X")
+                           #$display #$vt
+                           "-configdir" #$dir
+                           ;; Concatenate modules with commas.
+                           "-modulepath"
+                           (format #f "~{~a/lib/xorg/modules~^,~}"
+                                   '#$modules))
+                     '#$extra-options)))
+         (stop #~(make-kill-destructor))
+         (respawn? #f)))))))
 
 (define* (xorg-service #:key config-dir (display ":0") (vt "vt7")
                        (modules (list xf86-video-vesa xf86-input-evdev))
@@ -46,24 +78,11 @@ MODULES is a list of packages that provide appropriate libraries in
 
 EXTRA-OPTIONS is a list of additional command-line arguments passed to
 Xorg command."
-  (let ((modules (cons xorg-server modules)))
-    (with-monad %store-monad
-      (return
-       (service
-        (documentation (format #f "Xorg server (display ~a)" display))
-        (provision (list (symbol-append 'x (string->symbol display))))
-        (requirement '(user-processes udev))
-        (start
-         #~(make-forkexec-constructor
-            (append (list (string-append #$xorg-server "/bin/X")
-                          #$display #$vt
-                          "-configdir" #$config-dir
-                          ;; Concatenate modules with commas.
-                          "-modulepath"
-                          (format #f "~{~a/lib/xorg/modules~^,~}"
-                                  '#$modules))
-                    '#$extra-options)))
-        (stop #~(make-kill-destructor))
-        (respawn? #f))))))
+  (service xorg-service-type
+           (xorg-config (dir config-dir)
+                        (display display)
+                        (vt vt)
+                        (modules modules)
+                        (extra-options extra-options))))
 
 ;;; x.scm ends here
