@@ -1,33 +1,8 @@
 (use-modules
  (gnu)
  (guix profiles)
- (srfi srfi-1))
-
-(define-syntax module-package
-  (syntax-rules ()
-    ((_ module (package output))
-     (list (@ module package) output))
-    ((_ module package)
-     (@ module package))))
-
-(define-syntax-rule (module-packages module package ...)
-  (list (module-package module package)
-        ...))
-
-(define-syntax-rule (modules-packages (module package ...) ...)
-  (append (module-packages module package ...)
-          ...))
-
-(define-syntax-rule (define-packages-macro macro-name module-part ...)
-  (define-syntax macro-name
-    (syntax-rules ::: ()
-      ((_  (module-last-part package :::) :::)
-       (modules-packages ((module-part ... module-last-part)
-                          package :::)
-                         :::)))))
-
-(define-packages-macro guix-packages gnu packages)
-(define-packages-macro my-packages al guix packages)
+ (srfi srfi-1)
+ (al guix utils))
 
 
 ;;; Packages to build things
