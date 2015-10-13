@@ -134,6 +134,7 @@
         (static-networking-service "lo" "127.0.0.1"
                                    #:provision '(loopback))
 
+        (elogind-service)
         (dbus-service)
         (lsh-service)
         (syslog-service #:config-file (config-file "syslog/syslog.conf"))
