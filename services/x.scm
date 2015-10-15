@@ -44,6 +44,7 @@
 
 (define xorg-service-type
   (dmd-service-type
+   'xorg
    (match-lambda
      (($ <xorg-config> dir display vt modules extra-options)
       (let ((modules (cons xorg-server modules)))

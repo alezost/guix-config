@@ -43,6 +43,7 @@
 
 (define net-static-service-type
   (dmd-service-type
+   'net-static
    (match-lambda
      (($ <net-static> interface ip-address gateway name-servers)
       (let ((ip #~(string-append #$iproute "/sbin/ip")))

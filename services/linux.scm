@@ -35,6 +35,7 @@
 
 (define rmmod-service-type
   (dmd-service-type
+   'rmmod
    (lambda (modules)
      (dmd-service
       (documentation "Remove some useless modules from the kernel.")
@@ -64,6 +65,7 @@
 
 (define keycodes-service-type
   (dmd-service-type
+   'keycodes
    (lambda (args)
      (dmd-service
       (documentation "Map some missing scancodes (setkeycodes).")
@@ -81,6 +83,7 @@ ARGS are passed to 'setkeycodes'."
 
 (define keycodes-from-file-service-type
   (dmd-service-type
+   'keycodes-from-file
    (lambda (file)
      (dmd-service
       (documentation "Map some missing scancodes (setkeycodes).")
