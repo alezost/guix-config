@@ -11,7 +11,8 @@
  (guix packages)
  (gnu packages linux)
  (gnu packages package-management)
- (gnu services base))
+ (gnu services base)
+ (gnu services dmd))
 
 (define linux-libre-x86_64
   (package
@@ -34,11 +35,10 @@
 
 (define %services
   ;; Make sure guix-service uses 'guix-x86_64' package.
-  (map (lambda (mservice)
-         (mlet %store-monad ((service mservice))
-               (if (memq 'guix-daemon (service-provision service))
-                   (guix-service #:guix guix-x86_64)
-                   (return service))))
+  (map (lambda (service)
+         (if (eqv? 'guix (service-type-name (service-kind service)))
+             (guix-service (guix-configuration (guix guix-x86_64)))
+             service))
        %base-services))
 
 (operating-system
