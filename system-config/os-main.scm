@@ -3,8 +3,6 @@
  (guix store)
  (gnu system locale)
  (gnu system grub)
- (gnu packages linux)
- (gnu packages certs)
  (gnu services base)
  (gnu services networking)
  (gnu services dbus)
@@ -13,7 +11,8 @@
  (gnu services lirc)
  (al places)
  (al files)
- (al guix services linux))
+ (al guix services linux)
+ (al guix utils))
 
 (define %user-name "al")
 (define %host-name "leviafan")
@@ -90,9 +89,10 @@
     (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
     (packages
-     (cons* iproute
-            nss-certs
-            %base-packages))
+     (append (guix-packages
+              (linux iproute)
+              (certs nss-certs))
+             %base-packages))
 
     (services
      (let ((motd (plain-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
@@ -140,6 +140,8 @@
         (syslog-service #:config-file (config-file "syslog/syslog.conf"))
         (guix-service)
         (nscd-service)
-        (udev-service #:rules (list lvm2 fuse alsa-utils)))))))
+        (udev-service
+         #:rules (guix-packages
+                  (linux lvm2 fuse alsa-utils))))))))
 
 os
