@@ -134,6 +134,8 @@
         (static-networking-service "lo" "127.0.0.1"
                                    #:provision '(loopback))
 
+        (udisks-service)
+        (polkit-service)
         (elogind-service)
         (dbus-service)
         (lsh-service)
