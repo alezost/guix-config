@@ -137,7 +137,8 @@
         (elogind-service)
         (dbus-service)
         (lsh-service)
-        (syslog-service #:config-file (config-file "syslog/syslog.conf"))
+        (syslog-service #:config-file (local-file
+                                       (config-file "syslog/syslog.conf")))
         (guix-service)
         (nscd-service)
         (udev-service
