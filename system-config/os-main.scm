@@ -95,17 +95,9 @@
              %base-packages))
 
     (services
-     (let ((motd (plain-file "motd" "Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
+     (let ((motd (plain-file "motd" "\
+Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
        (list
-        (lirc-service #:device "name=i2c*" #:driver "devinput"
-                      #:config-file (local-file
-                                     (config-file "lirc/devinput.conf")))
-        (rmmod-service "pcspkr")
-        (console-keymap-service (local-file
-                                 (config-file "kbd/dvorak-alt.map")))
-        (keycodes-from-file-service (local-file
-                                     (config-file "kbd/scancodes-msmult")))
-
         (console-font-service "tty1")
         (console-font-service "tty2")
         (console-font-service "tty3")
@@ -126,6 +118,15 @@
                            (tty "tty5") (motd motd)))
         (mingetty-service (mingetty-configuration
                            (tty "tty6") (motd motd)))
+
+        (rmmod-service "pcspkr")
+        (console-keymap-service (local-file
+                                 (config-file "kbd/dvorak-alt.map")))
+        (keycodes-from-file-service (local-file
+                                     (config-file "kbd/scancodes-msmult")))
+        (lirc-service #:device "name=i2c*" #:driver "devinput"
+                      #:config-file (local-file
+                                     (config-file "lirc/devinput.conf")))
 
         (dhcp-client-service)
         ;; (static-networking-service "enp0s7" "192.168.1.32"
