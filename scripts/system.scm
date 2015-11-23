@@ -31,22 +31,26 @@
 (use-modules
  (ice-9 match)
  (ice-9 regex)
- (srfi srfi-2)
  (al places))
 
 (define %config (config-file "guix/system-config/os-main.scm"))
 
 (define (show-help)
-  (display "Usage: system ACTION
-Check, build or reconfigure guix system with the current config file.")
-  (display "\n
+  (display "Usage: system ACTION [ARGS ...]
+Check, build or reconfigure Guix system using the following config file:
+  ")
+  (display %config)
+  (newline)
+  (display "
+ARGS are the rest arguments that are passed to the according command.
+
 Actions:
-  c(heck)
-  b(uild)
-  r(econfigure)")
+  c(heck)               run 'guild compile' with some warning flags;
+  b(uild)               run 'guix system build';
+  r(econfigure)         run 'guix system reconfigure'.")
   (newline))
 
-(define (action->command action)
+(define (action->command action . rest-args)
   "Return a list with command and its arguments to perform ACTION.
 Return #f if ACTION is unknown."
   (define (action? real-action)
@@ -55,25 +59,24 @@ Return #f if ACTION is unknown."
 
   (cond
    ((action? "check")
-    (list "guild" "compile"
-          "-Wunbound-variable" "-Wunused-variable" "-Wunused-toplevel"
-          %config))
+    `("guild" "compile"
+      "-Wunbound-variable" "-Wunused-variable" "-Wunused-toplevel"
+      ,@rest-args ,%config))
    ((action? "build")
-    (list "guix" "system" "build" "--no-grub" %config))
+    `("guix" "system" "build" "--no-grub" ,@rest-args ,%config))
    ((action? "reconfigure")
-    (list "sudo" "--preserve-env"
-          "guix" "system" "reconfigure"
-          "--no-grub" "--no-substitutes" %config))
+    `("sudo" "--preserve-env"
+      "guix" "system" "reconfigure"
+      "--no-grub" "--no-substitutes" ,@rest-args ,%config))
    (else #f)))
 
 (define (main args)
-  (unless
-      (and-let* ((action (match args
-                           ((_ action _ ...)
-                            action)
-                           (_ #f)))
-                 (command (action->command action)))
-        (apply system* command))
-    (show-help)))
+  (match args
+    ((_ action rest-args ...)
+     (let ((cmd (apply action->command action rest-args)))
+       (if cmd
+           (apply system* cmd)
+           (show-help))))
+    (_ (show-help))))
 
 ;;; system.scm ends here
