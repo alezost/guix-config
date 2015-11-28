@@ -1,4 +1,4 @@
-;;; emacs.scm --- Guix utilities
+;;; utils.scm --- Guix utilities
 
 ;; Copyright © 2015 Alex Kost
 
