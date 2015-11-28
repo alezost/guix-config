@@ -31,10 +31,10 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages mp3))
 
-(define-public emms-minimal
+(define-public emacs-emms-minimal
   (package
     (inherit emms)
-    (name "emms-minimal")
+    (name "emacs-emms-minimal")
     (arguments
      `(#:make-flags
        (list (string-append "PREFIX=" %output)

@@ -70,7 +70,7 @@
            magit
            git-modes))
    (my-packages
-    (emacs emms-minimal))))
+    (emacs emacs-emms-minimal
 
 (define font-packages
   (guix-packages
