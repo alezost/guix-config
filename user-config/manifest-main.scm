@@ -65,12 +65,14 @@
    (guix-packages
     (emacs emacs
            emacs-pdf-tools
-           emacs-w3m
-           emacs-wget
-           magit
+           geiser
+           paredit
            git-modes))
    (my-packages
     (emacs emacs-emms-minimal
+           emacs-magit-minimal
+           emacs-w3m-minimal
+           emacs-wget-minimal))))
 
 (define font-packages
   (guix-packages
@@ -119,6 +121,7 @@
    (bittorrent rtorrent)
    (zip unzip)
    (dunst dunst)
+   (gnome libnotify)            ; for 'notify-send'
 
    (version-control git
                     (git "send-email")
