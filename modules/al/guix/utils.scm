@@ -25,8 +25,15 @@
 ;;; Code:
 
 (define-module (al guix utils)
-  #:export (guix-packages
+  #:use-module (srfi srfi-1)
+  #:use-module (guix profiles)
+  #:export (lists-of-packages->manifest
+            guix-packages
             my-packages))
+
+(define-syntax-rule (lists-of-packages->manifest packages ...)
+  (packages->manifest
+   (delete-duplicates (append packages ...) eq?)))
 
 (define-syntax module-package
   (syntax-rules ()

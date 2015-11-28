@@ -1,0 +1,181 @@
+;;; packages.scm --- Guix packages I use
+
+;; Copyright © 2015 Alex Kost
+
+;; Author: Alex Kost <alezost@gmail.com>
+;; Created: 28 Nov 2015
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; Lists of packages that I install in my Guix profiles using
+;; "guix package --manifest" facility.
+
+;;; Code:
+
+(define-module (al guix packages)
+  #:use-module (al guix utils)
+  #:export (build-common-packages
+            build-guix-packages
+            xorg-packages
+            xorg-friends-packages
+            emacs-packages
+            font-packages
+            multimedia-packages
+            misc-packages
+            unreliable-packages))
+
+
+;;; Packages to build things
+
+(define build-common-packages
+  (guix-packages
+   (commencement gcc-toolchain-5)
+   (base gnu-make)
+   (autotools autoconf
+              automake)
+   (pkg-config pkg-config)
+   (gettext gnu-gettext)
+   (texinfo texinfo)))
+
+(define build-guix-packages
+  (append
+   build-common-packages
+   (guix-packages
+    (guile guile-2.0
+           guile-json)
+    (tls gnutls)
+    (gnupg libgcrypt)
+    (graphviz graphviz)
+    (man help2man)
+    (databases sqlite))))
+
+
+;;; GUI
+
+(define xorg-packages
+  ;; Xorg server and required modules.
+  (guix-packages
+   (xorg xorg-server
+         xf86-input-evdev
+         xf86-video-fbdev
+         xf86-video-modesetting
+         xf86-video-nv
+         xf86-video-nouveau)))
+
+(define xorg-friends-packages
+  (guix-packages
+   (xorg xrandr
+         xmodmap
+         setxkbmap
+         xrdb
+         xset
+         xsetroot
+         xdpyinfo
+         xev
+         xinput
+         xterm)
+   (xdisorg wmctrl
+            unclutter
+            scrot)
+   (openbox openbox)))
+
+
+;;; Other packages
+
+(define emacs-packages
+  ;; Emacs packages, but not Emacs itself.
+  (append
+   (guix-packages
+    (emacs emacs-pdf-tools
+           geiser
+           paredit
+           git-modes))
+   (my-packages
+    (emacs emacs-emms-minimal
+           emacs-magit-minimal
+           emacs-w3m-minimal
+           emacs-wget-minimal))))
+
+(define font-packages
+  (guix-packages
+   (xorg font-adobe100dpi
+         font-adobe75dpi
+         font-alias
+         font-misc-misc)
+   (fonts font-dejavu
+          font-gnu-freefont-ttf
+          font-liberation
+          font-adobe-source-han-sans)
+   (fontutils fontconfig)
+   (ghostscript gs-fonts)))
+
+(define multimedia-packages
+  (append
+   (guix-packages
+    (pdf zathura
+         zathura-pdf-poppler
+         zathura-djvu)
+    (imagemagick imagemagick)
+    (audio sox)
+    (video mplayer
+           mpv
+           youtube-dl)
+    (tv tvtime))
+   (my-packages
+    (sxiv sxiv-configured))))
+
+(define misc-packages
+  (guix-packages
+   (linux alsa-utils
+          lm-sensors
+          sshfs-fuse)
+   (emacs emacs)
+   (file file)
+   (glib dbus)
+   (gnupg gnupg
+          pinentry)
+   (gnuzilla icecat)
+   (w3m w3m)
+   (xml libxslt)
+   (wget wget)
+   (admin netcat)
+   (lirc lirc)
+   (ssh openssh)
+   (bittorrent rtorrent)
+   (zip unzip)
+   (dunst dunst)
+   (gnome libnotify)            ; for 'notify-send'
+
+   (version-control git
+                    (git "send-email")
+                    git-manpages)
+
+   (guile guile-2.0)
+   (plotutils guile-charting)
+   (python python-wrapper)
+
+   (aspell aspell
+           aspell-dict-en
+           aspell-dict-ru)))
+
+(define unreliable-packages
+  ;; Some terrible people use the same URL for different versions of
+  ;; their programs, so when the version changes, the hash of the source
+  ;; changes as well, and the package does not work anymore.
+  (my-packages
+   (fonts font-symbola)))
+
+;;; packages.scm ends here
