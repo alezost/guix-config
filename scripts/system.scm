@@ -33,7 +33,7 @@
  (ice-9 regex)
  (al places))
 
-(define %config (config-file "guix/system-config/os-main.scm"))
+(define %config (guix-system-file "main"))
 
 (define (show-help)
   (format #t "Usage: ~a ACTION [ARGS ...]
