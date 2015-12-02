@@ -36,12 +36,12 @@
 (define %config (config-file "guix/system-config/os-main.scm"))
 
 (define (show-help)
-  (display "Usage: system ACTION [ARGS ...]
+  (format #t "Usage: ~a ACTION [ARGS ...]
 Check, build or reconfigure Guix system using the following config file:
-  ")
-  (display %config)
-  (newline)
-  (display "
+
+  ~a"
+          (car (command-line)) %config)
+  (display "\n
 ARGS are the rest arguments that are passed to the according command.
 
 Actions:
@@ -71,8 +71,8 @@ Return #f if ACTION is unknown."
    (else #f)))
 
 (define (main args)
-  (match args
-    ((_ action rest-args ...)
+  (match (cdr args)
+    ((action rest-args ...)
      (let ((cmd (apply action->command action rest-args)))
        (if cmd
            (apply system* cmd)
