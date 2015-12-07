@@ -22,5 +22,6 @@ if [[ -a "/usr/bin" ]]; then
     echo "/usr/bin already exists"
     exit 1
 else
-    ln -sv "$HOME/.guix-profile/bin" "/usr/bin"
+    # ln -sv "$HOME/.guix-profile/bin" "/usr/bin"
+    ln -sv "$HOME/.guix-profiles/main/main/bin" "/usr/bin"
 fi
