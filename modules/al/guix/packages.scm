@@ -77,15 +77,16 @@
 
 (define xorg-friends-packages
   (guix-packages
-   (xorg xrandr
-         xmodmap
-         setxkbmap
-         xrdb
-         xset
-         xsetroot
+   (xorg setxkbmap
          xdpyinfo
          xev
          xinput
+         xlsfonts
+         xmodmap
+         xrandr
+         xrdb
+         xset
+         xsetroot
          xterm)
    (xdisorg wmctrl
             unclutter
