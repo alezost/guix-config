@@ -29,7 +29,16 @@
   #:use-module (guix download)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages xorg)
   #:use-module (gnu packages zip))
+
+(define-public font-alias-pure
+  (package
+    (inherit font-alias)
+    (name "font-alias-pure")
+    (arguments '())
+    (synopsis (string-append (package-synopsis font-alias)
+                             " (upstream package without modifications)"))))
 
 (define-public font-symbola
   (package

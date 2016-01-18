@@ -111,17 +111,20 @@
            emacs-wget-minimal))))
 
 (define font-packages
-  (guix-packages
-   (xorg font-adobe100dpi
-         font-adobe75dpi
-         font-alias
-         font-misc-misc)
-   (fonts font-dejavu
-          font-gnu-freefont-ttf
-          font-liberation
-          font-adobe-source-han-sans)
-   (fontutils fontconfig)
-   (ghostscript gs-fonts)))
+  (append
+   (guix-packages
+    (xorg font-adobe100dpi
+          font-adobe75dpi
+          ;; font-alias
+          font-misc-misc)
+    (fonts font-adobe-source-han-sans
+           font-dejavu
+           font-gnu-freefont-ttf
+           font-liberation)
+    (fontutils fontconfig)
+    (ghostscript gs-fonts))
+   (my-packages
+    (fonts font-alias-pure))))
 
 (define multimedia-packages
   (append
