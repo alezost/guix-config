@@ -50,7 +50,7 @@
                 (file-name (string-append name "-" version)))))))
 
 (define-public sxiv-configured
-  (let ((sxiv sxiv-git))
+  (let ((sxiv sxiv))
     (package
       (inherit sxiv)
       (name "sxiv-configured")
@@ -58,11 +58,10 @@
        (substitute-keyword-arguments (package-arguments sxiv)
          ((#:phases phases)
           `(modify-phases ,phases
-             (add-before
-              'build 'add-custom-config.h
-              (lambda* (#:key inputs #:allow-other-keys)
-                (let ((config.h (assoc-ref inputs "config.h")))
-                  (copy-file config.h "config.h"))))))))
+             (add-before 'build 'add-custom-config.h
+               (lambda* (#:key inputs #:allow-other-keys)
+                 (let ((config.h (assoc-ref inputs "config.h")))
+                   (copy-file config.h "config.h"))))))))
       (inputs
        (cons `("config.h"
                ,(origin
@@ -71,7 +70,7 @@
                                       (config-file "sxiv/config.h")))
                   (sha256
                    (base32
-                    "1xz5n330mk6n43qd8a93bqi24mp9g4nmd4i78nk9yppjy1nji2ji"))))
+                    "196cmfj3b7gs3sc7hczmv8lbm7q1m6099x4idb1vyqq527c40vhx"))))
              (package-inputs sxiv)))
       (synopsis (string-append (package-synopsis sxiv)
                                " (compiled with custom 'config.h')")))))
