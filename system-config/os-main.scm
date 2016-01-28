@@ -1,9 +1,6 @@
 (use-modules
  (gnu)
- (guix store)
  (gnu system locale)
- (gnu system grub)
- (gnu services base)
  (gnu services networking)
  (gnu services dbus)
  (gnu services desktop)
