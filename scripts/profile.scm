@@ -3,7 +3,7 @@
 !#
 ;;; profile.scm --- Populate my Guix profiles
 
-;; Copyright © 2015 Alex Kost
+;; Copyright © 2015, 2016 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 30 Nov 2015
@@ -45,7 +45,11 @@ Populate profile with manifest file using the following command:
           (car (command-line))
           (guix-profile-file "NAME")
           (guix-manifest-file "NAME"))
-  (display "\n
+  (display "
+
+NAME may also be 'all' which means populate profiles with all available
+manifests.
+
 Options:
   -h, --help        display this help and exit
   -l, --list        list available NAMEs and exit")
@@ -83,6 +87,10 @@ Options:
      (show-help))
     (((or "-l" "--list" "list") _ ...)
      (display-names (names)))
+    (("all" rest-args ...)
+     (map (lambda (name)
+            (apply populate-profile name rest-args))
+          (names)))
     ((name rest-args ...)
      (apply populate-profile name rest-args))
     (_ (show-help))))
