@@ -26,7 +26,7 @@
 
 (define-module (al guix services net)
   #:use-module (gnu services)
-  #:use-module (gnu services dmd)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (gnu packages linux)
@@ -42,12 +42,12 @@
   (name-servers net-static-name-servers))
 
 (define net-static-service-type
-  (dmd-service-type
+  (shepherd-service-type
    'net-static
    (match-lambda
      (($ <net-static> interface ip-address gateway name-servers)
       (let ((ip #~(string-append #$iproute "/sbin/ip")))
-        (dmd-service
+        (shepherd-service
          (documentation "Networking interface with a static IP.")
          (provision '(networking))
          ;; Wait for udev to be sure that INTERFACE is usable.

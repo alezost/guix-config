@@ -26,7 +26,7 @@
 
 (define-module (al guix services x)
   #:use-module (gnu services)
-  #:use-module (gnu services dmd)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (gnu packages xorg)
@@ -43,12 +43,12 @@
   (extra-options xorg-config-extra-options))
 
 (define xorg-service-type
-  (dmd-service-type
+  (shepherd-service-type
    'xorg
    (match-lambda
      (($ <xorg-config> dir display vt modules extra-options)
       (let ((modules (cons xorg-server modules)))
-        (dmd-service
+        (shepherd-service
          (documentation (format #f "Xorg server (display ~a)" display))
          (provision (list (symbol-append 'x (string->symbol display))))
          (requirement '(user-processes udev))

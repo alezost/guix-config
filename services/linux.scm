@@ -26,7 +26,7 @@
 
 (define-module (al guix services linux)
   #:use-module (gnu services)
-  #:use-module (gnu services dmd)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (gnu packages linux)
   #:export (rmmod-service
@@ -34,10 +34,10 @@
             keycodes-from-file-service))
 
 (define rmmod-service-type
-  (dmd-service-type
+  (shepherd-service-type
    'rmmod
    (lambda (modules)
-     (dmd-service
+     (shepherd-service
       (documentation "Remove some useless modules from the kernel.")
       (provision '(rmmod))
       (start #~(lambda _
@@ -64,10 +64,10 @@
   (service rmmod-service-type modules))
 
 (define keycodes-service-type
-  (dmd-service-type
+  (shepherd-service-type
    'keycodes
    (lambda (args)
-     (dmd-service
+     (shepherd-service
       (documentation "Map some missing scancodes (setkeycodes).")
       (provision '(keycodes))
       (start #~(lambda _
@@ -82,10 +82,10 @@ ARGS are passed to 'setkeycodes'."
   (service keycodes-service-type args))
 
 (define keycodes-from-file-service-type
-  (dmd-service-type
+  (shepherd-service-type
    'keycodes-from-file
    (lambda (file)
-     (dmd-service
+     (shepherd-service
       (documentation "Map some missing scancodes (setkeycodes).")
       (provision '(keycodes))
       (start #~(lambda _
