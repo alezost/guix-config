@@ -1,5 +1,4 @@
-#!/usr/bin/guile \
--e main -s
+#!/usr/bin/env guile
 !#
 ;;; system.scm --- Check, build or reconfigure guix system
 
@@ -78,5 +77,8 @@ Return #f if ACTION is unknown."
            (apply system* cmd)
            (show-help))))
     (_ (show-help))))
+
+(when (batch-mode?)
+  (main (command-line)))
 
 ;;; system.scm ends here

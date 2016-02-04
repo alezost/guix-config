@@ -1,5 +1,4 @@
-#!/usr/bin/guile \
--e main -s
+#!/usr/bin/env guile
 !#
 ;;; profile.scm --- Populate my Guix profiles
 
@@ -94,5 +93,8 @@ Options:
     ((name rest-args ...)
      (apply populate-profile name rest-args))
     (_ (show-help))))
+
+(when (batch-mode?)
+  (main (command-line)))
 
 ;;; profile.scm ends here
