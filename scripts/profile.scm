@@ -42,7 +42,7 @@ Populate profile with manifest file using the following command:
 
   guix package --profile='~a' --manifest='~a' ARGS ..."
           (car (command-line))
-          (guix-profile-file "NAME")
+          (guix-profile "NAME")
           (guix-manifest-file "NAME"))
   (display "
 
@@ -68,7 +68,7 @@ Options:
   (format #t "~{~a~%~}" (sort names string-ci<)))
 
 (define (populate-profile name . rest-args)
-  (let ((profile  (guix-profile-file name))
+  (let ((profile  (guix-profile name))
         (manifest (guix-manifest-file name)))
     (if (file-exists? manifest)
         (apply system*
