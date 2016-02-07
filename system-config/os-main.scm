@@ -67,8 +67,6 @@
               (type "ext4"))
             %base-file-systems))
 
-    (swap-devices '("/dev/disk/by-label/swap"))
-
     (users
      (cons* (user-account
              (name %user-name)
