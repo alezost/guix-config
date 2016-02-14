@@ -49,7 +49,7 @@
               (uri "http://users.teilar.gr/~g1951d/Symbola.zip")
               (sha256
                (base32
-                "07bczpl3vqdpg2gakfddhzzgpb6v2wpasv7rwqxkyg9yd9lmbr0s"))))
+                "1lfs2j816332ysvpb5ibj2gwpmyqyispqdl7skkshf2gra18hmhd"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
