@@ -1,4 +1,5 @@
 (use-modules
+ (srfi srfi-1)
  (gnu)
  (gnu system locale)
  (gnu services networking)
@@ -84,10 +85,16 @@
     (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
     (packages
-     (append (guix-packages
-              (linux iproute)
-              (certs nss-certs))
-             %base-packages))
+     (let ((useless-packages (guix-packages
+                              (linux iw wireless-tools)
+                              (nano nano)
+                              (texinfo texinfo)
+                              (zile zile))))
+       (append (guix-packages
+                (certs nss-certs))
+               (remove (lambda (pkg)
+                         (memq pkg useless-packages))
+                       %base-packages))))
 
     (services
      (let ((motd (plain-file "motd" "\
