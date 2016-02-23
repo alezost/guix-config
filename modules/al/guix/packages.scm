@@ -67,13 +67,16 @@
 
 (define xorg-packages
   ;; Xorg server and required modules.
-  (guix-packages
-   (xorg xorg-server
-         xf86-input-evdev
-         xf86-video-fbdev
-         xf86-video-modesetting
-         xf86-video-nv
-         xf86-video-nouveau)))
+  (append
+   (guix-packages
+    (xorg xorg-server
+          xf86-input-evdev
+          xf86-video-fbdev
+          xf86-video-modesetting
+          xf86-video-nv
+          xf86-video-nouveau))
+   (my-packages
+    (x xdaemon))))
 
 (define xorg-friends-packages
   (guix-packages
@@ -101,6 +104,7 @@
   (append
    (guix-packages
     (emacs emacs-pdf-tools
+           emacs-debbugs
            geiser
            paredit
            git-modes))
@@ -161,12 +165,14 @@
    (bittorrent rtorrent)
    (zip unzip)
    (dunst dunst)
-   (gnome libnotify)            ; for 'notify-send'
+   (gnome baobab
+          libnotify)            ; for 'notify-send'
 
    (version-control git
                     (git "send-email")
                     git-manpages)
 
+   (lisp sbcl)
    (guile guile-2.0)
    (plotutils guile-charting)
    (python python-wrapper)
