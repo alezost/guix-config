@@ -37,6 +37,8 @@
      (grub-configuration (device "/dev/sda")
                          (theme (grub-theme))))
 
+    (kernel-arguments '("modprobe.blacklist=pcspkr"))
+
     (initrd (lambda (fs . args)
               (apply base-initrd fs
                      #:extra-modules %linux-modules
@@ -121,7 +123,6 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
         (mingetty-service (mingetty-configuration
                            (tty "tty6") (motd motd)))
 
-        (rmmod-service "pcspkr")
         (console-keymap-service (local-file
                                  (config-file "kbd/dvorak-alt.map")))
         (keycodes-from-file-service (local-file
