@@ -78,7 +78,7 @@
              (home-directory (string-append "/home/" %user-name))
              (group "users")
              (supplementary-groups
-              '("wheel" "audio" "video" "lp" "cdrom")))
+              '("wheel" "kvm" "audio" "video" "lp" "cdrom")))
             %base-user-accounts))
 
     (sudoers-file (local-file (config-file "etc/sudoers")))
