@@ -1,6 +1,6 @@
 ;;; linux.scm --- Linux services
 
-;; Copyright © 2015 Alex Kost
+;; Copyright © 2015, 2016 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 14 Feb 2015
@@ -29,39 +29,8 @@
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (gnu packages linux)
-  #:export (rmmod-service
-            keycodes-service
+  #:export (keycodes-service
             keycodes-from-file-service))
-
-(define rmmod-service-type
-  (shepherd-service-type
-   'rmmod
-   (lambda (modules)
-     (shepherd-service
-      (documentation "Remove some useless modules from the kernel.")
-      (provision '(rmmod))
-      (start #~(lambda _
-                 ;; FIXME Why the hell it doesn't work on boot (not
-                 ;; "modprobe", not even "rmmod")?  However, it
-                 ;; works after "deco restart rmmod".
-
-                 ;; (setenv "LINUX_MODULE_DIRECTORY"
-                 ;;         "/run/booted-system/kernel/lib/modules")
-                 (zero? (apply system*
-                               (string-append #$kmod "/bin/modprobe")
-                               "--verbose" "--remove" '#$modules))
-
-                 ;; (let ((rmmod (string-append #$kmod "/bin/rmmod")))
-                 ;;   (for-each (lambda (module)
-                 ;;               (system* rmmod module))
-                 ;;             '#$modules)
-                 ;;   #t)
-                 ))
-      (respawn? #f)))))
-
-(define (rmmod-service . modules)
-  "Remove MODULES from the kernel."
-  (service rmmod-service-type modules))
 
 (define keycodes-service-type
   (shepherd-service-type
