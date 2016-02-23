@@ -3,7 +3,6 @@
  (al guix utils))
 
 (lists-of-packages->manifest
- xorg-packages
  xorg-friends-packages
  font-packages
  multimedia-packages

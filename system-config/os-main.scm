@@ -9,6 +9,7 @@
  (gnu services lirc)
  (al places)
  (al files)
+ (al guix packages)
  (al guix services linux)
  (al guix utils))
 
@@ -94,6 +95,7 @@
                               (zile zile))))
        (append (guix-packages
                 (certs nss-certs))
+               xorg-packages
                (remove (lambda (pkg)
                          (memq pkg useless-packages))
                        %base-packages))))
