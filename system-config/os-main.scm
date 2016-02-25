@@ -9,6 +9,7 @@
  (gnu services lirc)
  (al places)
  (al files)
+ (al utils)
  (al guix packages)
  (al guix services linux)
  (al guix utils))
@@ -17,11 +18,14 @@
 (define %group-name "users")
 (define %host-name "leviafan")
 
-(define %linux-modules
+(define %extra-linux-modules
   '("fuse"              ; for sshfs
     "sata_nv"           ; for my HDD to be recognized
     "snd-seq"           ; for MIDI-keyboard
     ))
+
+(define %redundant-linux-modules
+  '("pcspkr" "snd_pcsp"))
 
 (define os
   (operating-system
@@ -39,11 +43,14 @@
      (grub-configuration (device "/dev/sda")
                          (theme (grub-theme))))
 
-    (kernel-arguments '("modprobe.blacklist=pcspkr"))
+    (kernel-arguments
+     (list (string-append "modprobe.blacklist="
+                          (apply comma-separated
+                                 %redundant-linux-modules))))
 
     (initrd (lambda (fs . args)
               (apply base-initrd fs
-                     #:extra-modules %linux-modules
+                     #:extra-modules %extra-linux-modules
                      args)))
 
     (file-systems
