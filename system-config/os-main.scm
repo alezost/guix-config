@@ -14,6 +14,7 @@
  (al guix utils))
 
 (define %user-name "al")
+(define %group-name "users")
 (define %host-name "leviafan")
 
 (define %linux-modules
@@ -77,7 +78,7 @@
              (uid 1000)
              (comment "Alex Kost")
              (home-directory (string-append "/home/" %user-name))
-             (group "users")
+             (group %group-name)
              (supplementary-groups
               '("wheel" "kvm" "audio" "video" "lp" "cdrom")))
             %base-user-accounts))
