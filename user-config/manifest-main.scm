@@ -4,7 +4,6 @@
 
 (lists-of-packages->manifest
  xorg-friends-packages
- font-packages
  multimedia-packages
  misc-packages
  ;; unreliable-packages

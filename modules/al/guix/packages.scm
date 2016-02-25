@@ -1,6 +1,6 @@
 ;;; packages.scm --- Guix packages I use
 
-;; Copyright © 2015 Alex Kost
+;; Copyright © 2015, 2016 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 28 Nov 2015
@@ -125,10 +125,10 @@
            font-dejavu
            font-gnu-freefont-ttf
            font-liberation)
-    (fontutils fontconfig)
     (ghostscript gs-fonts))
    (my-packages
-    (fonts font-alias-pure))))
+    (fonts font-alias-pure
+           font-symbola))))
 
 (define multimedia-packages
   (append
@@ -152,6 +152,7 @@
           sshfs-fuse)
    (emacs emacs)
    (file file)
+   (fontutils fontconfig)
    (glib dbus)
    (gnupg gnupg
           pinentry)
