@@ -77,6 +77,16 @@
               (mount-point "/mnt/boot")
               (create-mount-point? #t)
               (type "ext4"))
+            (file-system
+              (device "teXet")
+              (title 'label)
+              (mount-point "/mnt/texet")
+              (mount? #f)
+              (create-mount-point? #t)
+              (type "vfat")
+              (options (comma-separated
+                        "rw" "user" "noauto" "utf8" "umask=0002"
+                        (string-append "gid=" %group-name))))
             %base-file-systems))
 
     (users
