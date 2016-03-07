@@ -57,33 +57,37 @@
      (cons* (file-system
               (device "guix")
               (title 'label)
-              (mount-point "/")
-              (type "ext4"))
+              (type "ext4")
+              (mount-point "/"))
             (file-system
               (device "storage")
               (title 'label)
+              (type "ext4")
               (mount-point "/mnt/storage")
               (create-mount-point? #t)
-              (type "ext4"))
+              (check? #f))
             (file-system
               (device "arch")
               (title 'label)
+              (type "ext4")
               (mount-point "/mnt/arch")
               (create-mount-point? #t)
-              (type "ext4"))
+              (check? #f))
             (file-system
               (device "boot")
               (title 'label)
+              (type "ext4")
               (mount-point "/mnt/boot")
               (create-mount-point? #t)
-              (type "ext4"))
+              (check? #f))
             (file-system
               (device "teXet")
               (title 'label)
+              (type "vfat")
               (mount-point "/mnt/texet")
               (mount? #f)
               (create-mount-point? #t)
-              (type "vfat")
+              (check? #f)
               (options (comma-separated
                         "rw" "user" "noauto" "utf8" "umask=0002"
                         (string-append "gid=" %group-name))))
