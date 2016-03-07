@@ -100,6 +100,22 @@
               '("wheel" "kvm" "audio" "video" "lp" "cdrom")))
             %base-user-accounts))
 
+    (groups
+     ;; Use ID 100 for "users" group.  Actually, this wouldn't change ID
+     ;; of an existing group, because the following command (called by
+     ;; 'add-group' in (gnu build activation) module):
+     ;;
+     ;;   groupadd -g 100 --system users
+     ;;
+     ;; fails telling: "group 'users' already exists".
+     (replace (lambda (group)
+                (string=? "users" (user-group-name group)))
+              (user-group (name "users")
+                          (id 100)
+                          (system? #t))
+              %base-groups))
+
+
     (sudoers-file (local-file (config-file "etc/sudoers")))
     (hosts-file (local-file (config-file "etc/hosts")))
 
