@@ -132,6 +132,7 @@
                               (texinfo texinfo)
                               (zile zile))))
        (append (guix-packages
+                (admin shadow)
                 (certs nss-certs))
                xorg-packages
                (remove (lambda (pkg)
