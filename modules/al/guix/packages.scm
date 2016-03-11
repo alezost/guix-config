@@ -123,6 +123,7 @@
           font-misc-misc)
     (fonts font-adobe-source-han-sans
            font-dejavu
+           font-ubuntu
            font-gnu-freefont-ttf
            font-liberation)
     (ghostscript gs-fonts))
@@ -166,6 +167,7 @@
    (bittorrent rtorrent)
    (zip unzip)
    (dunst dunst)
+   (gtk gtk-engines)            ; standard themes (clearlooks, etc.)
    (gnome baobab
           libnotify)            ; for 'notify-send'
 
