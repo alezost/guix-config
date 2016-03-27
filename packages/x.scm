@@ -40,21 +40,12 @@
     (source (origin
               (method url-fetch)
               (uri (string-append
-                    "https://github.com/alezost/xdaemon/archive/v"
-                    version ".tar.gz"))
-              (file-name (string-append name "-" version ".tar.gz"))
+                    "https://github.com/alezost/xdaemon/releases/download/v"
+                    version "/xdaemon-" version ".tar.gz"))
               (sha256
                (base32
-                "1k2cg6x1jzcpx1mq871ic04i5flg155f5rpn8jgmaj7agp8hibfx"))))
+                "1skga4kq5zhw26ah2mxl4l68gxcf1m7dz75iywsdizw002bcypdg"))))
     (build-system gnu-build-system)
-    (arguments
-     '(#:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'bootstrap
-           (lambda _ (zero? (system* "autoreconf" "-vfi")))))))
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("automake" ,automake)))
     (inputs
      `(("bash" ,bash)
        ("xorg-server" ,xorg-server)))
@@ -64,8 +55,8 @@
      "Xdaemon is a wrapper bash script that allows to turn X server into
 a daemon.  When Xdaemon is started, it runs Xorg server, then waits
 until it will be ready to accept connections from clients, and quits.
-Another script that comes with this package is Xkill.  It allows to kill
-an X server run on a particular @code{DISPLAY}.")
+Another script that comes with this package is Xkill.  It allows a user
+to kill an X server running on a particular @code{DISPLAY}.")
     ;; 'Xdaemon' script is under FreeBSD, the rest is under GPL3 or later.
     (license (list license:bsd-2 license:gpl3+))))
 
