@@ -59,4 +59,27 @@ to kill an X server running on a particular @code{DISPLAY}.")
     ;; 'Xdaemon' script is under FreeBSD, the rest is under GPL3 or later.
     (license (list license:bsd-2 license:gpl3+))))
 
+(define-public xdpyprobe
+  (package
+    (name "xdpyprobe")
+    (version "0.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/alezost/xdpyprobe/releases/download/v"
+                    version "/" name "-" version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1h09wd2qcg08rj5hcakvdh9q01hkrj8vxly94ax3ch2x06lm0zq8"))))
+    (build-system gnu-build-system)
+    (inputs
+     `(("libx11" ,libx11)))
+    (home-page "https://github.com/alezost/xdpyprobe")
+    (synopsis "Probe X server for connectivity")
+    (description
+     "Xdpyprobe is a tiny C program whose only purpose is to probe a
+connectivity of the X server running on a particular @code{DISPLAY}.")
+    (license license:gpl3+)))
+
 ;;; x.scm ends here

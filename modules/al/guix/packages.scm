@@ -79,22 +79,25 @@
     (x xdaemon))))
 
 (define xorg-friends-packages
-  (guix-packages
-   (xorg setxkbmap
-         xdpyinfo
-         xev
-         xinput
-         xlsfonts
-         xmodmap
-         xrandr
-         xrdb
-         xset
-         xsetroot
-         xterm)
-   (xdisorg wmctrl
-            unclutter
-            scrot)
-   (openbox openbox)))
+  (append
+   (guix-packages
+    (xorg setxkbmap
+          xdpyinfo
+          xev
+          xinput
+          xlsfonts
+          xmodmap
+          xrandr
+          xrdb
+          xset
+          xsetroot
+          xterm)
+    (xdisorg wmctrl
+             unclutter
+             scrot)
+    (openbox openbox))
+   (my-packages
+    (x xdpyprobe))))
 
 
 ;;; Other packages
