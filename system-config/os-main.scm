@@ -176,6 +176,7 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
         ;; (static-networking-service "enp0s7" "192.168.1.32"
         ;;                            #:gateway "192.168.1.1"
         ;;                            #:name-servers '("77.88.8.8"))
+        (tor-service)
         (static-networking-service "lo" "127.0.0.1"
                                    #:provision '(loopback))
 
