@@ -54,19 +54,19 @@
     (inherit magit)
     (name "emacs-magit-minimal")
     (arguments
-     `(,@(substitute-keyword-arguments (package-arguments magit)
-           ((#:phases phases)
-            `(modify-phases ,phases
-               (replace 'patch-exec-paths
-                 (lambda _
-                   (with-directory-excursion "lisp"
-                     (emacs-substitute-variables "magit-git.el"
-                       ("magit-git-executable" "git"))
-                     (emacs-substitute-variables "magit-process.el"
-                       ;; This crap tries to run "git" to define the
-                       ;; default value (which is nil anyway).
-                       ("magit-need-cygwin-noglob" '()))
-                     #t))))))))
+     (substitute-keyword-arguments (package-arguments magit)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (replace 'patch-exec-paths
+             (lambda _
+               (with-directory-excursion "lisp"
+                 (emacs-substitute-variables "magit-git.el"
+                   ("magit-git-executable" "git"))
+                 (emacs-substitute-variables "magit-process.el"
+                   ;; This crap tries to run "git" to define the
+                   ;; default value (which is nil anyway).
+                   ("magit-need-cygwin-noglob" '()))
+                 #t)))))))
     (inputs '())
     (synopsis (string-append (package-synopsis magit)
                              " (without git dependency)"))))
@@ -76,16 +76,16 @@
     (inherit emacs-w3m)
     (name "emacs-w3m-minimal")
     (arguments
-     `(,@(substitute-keyword-arguments (package-arguments emacs-w3m)
-           ((#:phases phases)
-            `(modify-phases ,phases
-               (replace 'patch-exec-paths
-                 (lambda* (#:key outputs #:allow-other-keys)
-                   (let ((out (assoc-ref outputs "out")))
-                     (emacs-substitute-variables "w3m.el"
-                       ("w3m-icon-directory"
-                        (string-append out "/share/images/emacs-w3m")))
-                     #t))))))))
+     (substitute-keyword-arguments (package-arguments emacs-w3m)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (replace 'patch-exec-paths
+             (lambda* (#:key outputs #:allow-other-keys)
+               (let ((out (assoc-ref outputs "out")))
+                 (emacs-substitute-variables "w3m.el"
+                   ("w3m-icon-directory"
+                    (string-append out "/share/images/emacs-w3m")))
+                 #t)))))))
     (inputs '())
     (native-inputs
      `(("autoconf" ,autoconf)
@@ -98,10 +98,10 @@
     (inherit emacs-wget)
     (name "emacs-wget-minimal")
     (arguments
-     `(,@(substitute-keyword-arguments (package-arguments emacs-wget)
-           ((#:phases phases)
-            `(modify-phases ,phases
-               (delete 'patch-exec-paths))))))
+     (substitute-keyword-arguments (package-arguments emacs-wget)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (delete 'patch-exec-paths)))))
     (inputs '())
     (native-inputs
      `(("emacs" ,emacs-no-x)))
