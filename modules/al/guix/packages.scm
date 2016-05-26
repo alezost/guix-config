@@ -94,6 +94,8 @@
           xterm)
     (xdisorg wmctrl
              unclutter
+             slop
+             maim
              scrot)
     (openbox openbox))
    (my-packages
@@ -106,11 +108,12 @@
   ;; Emacs packages, but not Emacs itself.
   (append
    (guix-packages
-    (emacs emacs-pdf-tools
-           emacs-debbugs
+    (emacs emacs-debbugs
+           emacs-pdf-tools
+           emacs-smartparens
            geiser
-           paredit
-           git-modes))
+           git-modes
+           paredit))
    (my-packages
     (emacs emacs-emms-minimal
            emacs-magit-minimal
@@ -142,7 +145,8 @@
          zathura-djvu)
     (imagemagick imagemagick)
     (audio sox)
-    (video mplayer
+    (video ffmpeg
+           mplayer
            mpv
            youtube-dl)
     (tv tvtime))
