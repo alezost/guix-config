@@ -28,7 +28,6 @@
   #:use-module (guix packages)
   #:use-module (guix build utils)
   #:use-module (guix utils)
-  #:use-module (gnu packages autotools)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages mp3))
 
@@ -87,9 +86,6 @@
                     (string-append out "/share/images/emacs-w3m")))
                  #t)))))))
     (inputs '())
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("emacs" ,emacs-no-x)))
     (synopsis (string-append (package-synopsis emacs-w3m)
                              " (without extra dependencies)"))))
 
@@ -103,8 +99,6 @@
         `(modify-phases ,phases
            (delete 'patch-exec-paths)))))
     (inputs '())
-    (native-inputs
-     `(("emacs" ,emacs-no-x)))
     (synopsis (string-append (package-synopsis emacs-wget)
                              " (without wget dependencies)"))))
 
