@@ -133,7 +133,8 @@
                               (zile zile))))
        (append (guix-packages
                 (admin shadow)
-                (certs nss-certs))
+                (certs nss-certs)
+                (lirc lirc))
                xorg-packages
                (remove (lambda (pkg)
                          (memq pkg useless-packages))

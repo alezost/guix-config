@@ -169,7 +169,6 @@
    (xml libxslt)
    (wget wget)
    (admin netcat)
-   (lirc lirc)
    (ssh openssh)
    (bittorrent rtorrent)
    (zip unzip)
