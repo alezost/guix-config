@@ -32,6 +32,7 @@
             xorg-packages
             xorg-friends-packages
             emacs-packages
+            guile-packages
             font-packages
             multimedia-packages
             misc-packages
@@ -119,6 +120,12 @@
            emacs-w3m-minimal
            emacs-wget-minimal))))
 
+(define guile-packages
+  (guix-packages
+   (guile guile-2.0
+          guile-xosd
+          guile-daemon)))
+
 (define font-packages
   (append
    (guix-packages
@@ -181,8 +188,6 @@
                     git-manpages)
 
    (lisp sbcl)
-   (guile guile-2.0)
-   (plotutils guile-charting)
    (python python-wrapper)
 
    (aspell aspell
