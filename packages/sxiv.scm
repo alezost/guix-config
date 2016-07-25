@@ -25,6 +25,7 @@
 ;;; Code:
 
 (define-module (al guix packages sxiv)
+  #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -63,14 +64,7 @@
                  (let ((config.h (assoc-ref inputs "config.h")))
                    (copy-file config.h "config.h"))))))))
       (inputs
-       (cons `("config.h"
-               ,(origin
-                  (method url-fetch)
-                  (uri (string-append "file://"
-                                      (config-file "sxiv/config.h")))
-                  (sha256
-                   (base32
-                    "196cmfj3b7gs3sc7hczmv8lbm7q1m6099x4idb1vyqq527c40vhx"))))
+       (cons `("config.h" ,(local-file (config-file "sxiv/config.h")))
              (package-inputs sxiv)))
       (synopsis (string-append (package-synopsis sxiv)
                                " (compiled with custom 'config.h')")))))
