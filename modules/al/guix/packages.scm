@@ -96,10 +96,9 @@
              unclutter
              slop
              maim
-             scrot)
-    (openbox openbox))
-   (my-packages
-    (x xdpyprobe))))
+             scrot
+             xdpyprobe)
+    (openbox openbox))))
 
 
 ;;; Other packages
