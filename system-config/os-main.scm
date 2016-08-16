@@ -135,6 +135,8 @@
                 (admin shadow)
                 (certs nss-certs)
                 (lirc lirc))
+               (my-packages
+                (misc suspend))
                xorg-packages
                (remove (lambda (pkg)
                          (memq pkg useless-packages))
