@@ -184,8 +184,7 @@
           libnotify)            ; for 'notify-send'
 
    (version-control git
-                    (git "send-email")
-                    git-manpages)
+                    (git "send-email"))
 
    (lisp sbcl)
    (python python-wrapper)
