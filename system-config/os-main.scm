@@ -143,61 +143,60 @@
                        %base-packages))))
 
     (services
-     (let ((motd (plain-file "motd" "\
-Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
-       (list
-        (console-font-service "tty1")
-        (console-font-service "tty2")
-        (console-font-service "tty3")
-        (console-font-service "tty4")
-        (console-font-service "tty5")
-        (console-font-service "tty6")
+     (list
+      (console-font-service "tty1")
+      (console-font-service "tty2")
+      (console-font-service "tty3")
+      (console-font-service "tty4")
+      (console-font-service "tty5")
+      (console-font-service "tty6")
 
-        (mingetty-service (mingetty-configuration
-                           (tty "tty1")
-                           (auto-login %user-name)))
-        (mingetty-service (mingetty-configuration
-                           (tty "tty2")))
-        (mingetty-service (mingetty-configuration
-                           (tty "tty3")))
-        (mingetty-service (mingetty-configuration
-                           (tty "tty4")))
-        (mingetty-service (mingetty-configuration
-                           (tty "tty5")))
-        (mingetty-service (mingetty-configuration
-                           (tty "tty6")))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty1")
+                         (auto-login %user-name)))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty2")))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty3")))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty4")))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty5")))
+      (mingetty-service (mingetty-configuration
+                         (tty "tty6")))
 
-        (login-service (login-configuration
-                        (motd motd)))
+      (login-service (login-configuration
+                      (motd (plain-file "motd" "\
+Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
 
-        (console-keymap-service (local-file
-                                 (config-file "kbd/dvorak-alt.map")))
-        (keycodes-from-file-service (local-file
-                                     (config-file "kbd/scancodes-msmult")))
-        (lirc-service #:device "name=i2c*" #:driver "devinput"
-                      #:config-file (local-file
-                                     (config-file "lirc/devinput.conf")))
+      (console-keymap-service (local-file
+                               (config-file "kbd/dvorak-alt.map")))
+      (keycodes-from-file-service (local-file
+                                   (config-file "kbd/scancodes-msmult")))
+      (lirc-service #:device "name=i2c*" #:driver "devinput"
+                    #:config-file (local-file
+                                   (config-file "lirc/devinput.conf")))
 
-        (dhcp-client-service)
-        ;; (static-networking-service "enp0s7" "192.168.1.32"
-        ;;                            #:gateway "192.168.1.1"
-        ;;                            #:name-servers '("77.88.8.8"))
-        (tor-service)
-        (static-networking-service "lo" "127.0.0.1"
-                                   #:provision '(loopback))
+      (dhcp-client-service)
+      ;; (static-networking-service "enp0s7" "192.168.1.32"
+      ;;                            #:gateway "192.168.1.1"
+      ;;                            #:name-servers '("77.88.8.8"))
+      (tor-service)
+      (static-networking-service "lo" "127.0.0.1"
+                                 #:provision '(loopback))
 
-        (udisks-service)
-        (polkit-service)
-        (elogind-service)
-        (dbus-service)
-        (lsh-service)
-        (syslog-service (syslog-configuration
-                         (config-file (local-file
-                                       (config-file "syslog/syslog.conf")))))
-        (guix-service)
-        (nscd-service)
-        (udev-service
-         #:rules (guix-packages
-                  (linux lvm2 fuse alsa-utils))))))))
+      (udisks-service)
+      (polkit-service)
+      (elogind-service)
+      (dbus-service)
+      (lsh-service)
+      (syslog-service (syslog-configuration
+                       (config-file (local-file
+                                     (config-file "syslog/syslog.conf")))))
+      (guix-service)
+      (nscd-service)
+      (udev-service
+       #:rules (guix-packages
+                (linux lvm2 fuse alsa-utils)))))))
 
 os
