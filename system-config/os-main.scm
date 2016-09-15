@@ -154,18 +154,21 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
         (console-font-service "tty6")
 
         (mingetty-service (mingetty-configuration
-                           (tty "tty1") (motd motd)
+                           (tty "tty1")
                            (auto-login %user-name)))
         (mingetty-service (mingetty-configuration
-                           (tty "tty2") (motd motd)))
+                           (tty "tty2")))
         (mingetty-service (mingetty-configuration
-                           (tty "tty3") (motd motd)))
+                           (tty "tty3")))
         (mingetty-service (mingetty-configuration
-                           (tty "tty4") (motd motd)))
+                           (tty "tty4")))
         (mingetty-service (mingetty-configuration
-                           (tty "tty5") (motd motd)))
+                           (tty "tty5")))
         (mingetty-service (mingetty-configuration
-                           (tty "tty6") (motd motd)))
+                           (tty "tty6")))
+
+        (login-service (login-configuration
+                        (motd motd)))
 
         (console-keymap-service (local-file
                                  (config-file "kbd/dvorak-alt.map")))
