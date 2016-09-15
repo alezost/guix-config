@@ -191,8 +191,9 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n")))
         (elogind-service)
         (dbus-service)
         (lsh-service)
-        (syslog-service #:config-file (local-file
-                                       (config-file "syslog/syslog.conf")))
+        (syslog-service (syslog-configuration
+                         (config-file (local-file
+                                       (config-file "syslog/syslog.conf")))))
         (guix-service)
         (nscd-service)
         (udev-service
