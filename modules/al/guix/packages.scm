@@ -46,7 +46,8 @@
    (commencement gcc-toolchain-5)
    (base gnu-make)
    (autotools autoconf
-              automake)
+              automake
+              libtool)
    (pkg-config pkg-config)
    (gettext gnu-gettext)
    (texinfo texinfo)))
@@ -88,6 +89,7 @@
           xinput
           xlsfonts
           xmodmap
+          xprop
           xrandr
           xrdb
           xset
@@ -109,8 +111,12 @@
   (append
    (guix-packages
     (emacs emacs-debbugs
+           emacs-hl-todo
+           emacs-hydra
+           emacs-markdown-mode
            emacs-pdf-tools
            emacs-smartparens
+           emacs-smex
            geiser
            git-modes
            paredit))
@@ -163,9 +169,11 @@
   (guix-packages
    (linux alsa-utils
           lm-sensors
-          sshfs-fuse)
+          sshfs-fuse
+          strace)
    (emacs emacs)
    (file file)
+   (rsync rsync)
    (fontutils fontconfig)
    (glib dbus)
    (gnupg gnupg
@@ -173,6 +181,7 @@
    (gnuzilla icecat)
    (w3m w3m)
    (xml libxslt)
+   (curl curl)
    (wget wget)
    (admin netcat)
    (ssh openssh)
@@ -186,6 +195,7 @@
    (version-control git
                     (git "send-email"))
 
+   (gdb gdb)
    (lisp sbcl)
    (python python-wrapper)
 
