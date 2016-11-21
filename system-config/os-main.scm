@@ -191,6 +191,7 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (syslog-service (syslog-configuration
                        (config-file (local-file
                                      (config-file "syslog/syslog.conf")))))
+      (urandom-seed-service)
       (guix-service)
       (nscd-service)
       (udev-service
