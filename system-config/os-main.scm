@@ -81,6 +81,15 @@
               (create-mount-point? #t)
               (check? #f))
             (file-system
+              (device "/dev/sr0")
+              (title 'device)
+              (type "iso9660")
+              (mount-point "/mnt/cdrom")
+              (mount? #f)
+              (create-mount-point? #t)
+              (check? #f)
+              (options (comma-separated "ro" "user" "noauto")))
+            (file-system
               (device "teXet")
               (title 'label)
               (type "vfat")
