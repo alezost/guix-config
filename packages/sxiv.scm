@@ -31,7 +31,7 @@
   #:use-module (guix git-download)
   #:use-module (guix build utils)
   #:use-module (guix utils)
-  #:use-module (gnu packages sxiv)
+  #:use-module (gnu packages image-viewers)
   #:use-module (al places))
 
 (define-public sxiv-git
