@@ -52,18 +52,6 @@
    (gettext gnu-gettext)
    (texinfo texinfo)))
 
-(define build-guix-packages
-  (append
-   build-common-packages
-   (guix-packages
-    (guile guile-2.0
-           guile-json)
-    (tls gnutls)
-    (gnupg libgcrypt)
-    (graphviz graphviz)
-    (man help2man)
-    (databases sqlite))))
-
 
 ;;; GUI
 

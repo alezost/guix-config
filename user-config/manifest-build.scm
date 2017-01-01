@@ -2,4 +2,4 @@
  (guix profiles)
  (al guix packages))
 
-(packages->manifest build-guix-packages)
+(packages->manifest build-common-packages)
