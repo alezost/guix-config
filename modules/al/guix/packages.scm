@@ -106,10 +106,10 @@
            git-modes
            paredit))
    (my-packages
-    (emacs emacs-emms-minimal
-           emacs-magit-minimal
-           emacs-w3m-minimal
-           emacs-wget-minimal))))
+    (emacs my-emacs-emms
+           my-emacs-magit
+           my-emacs-w3m
+           my-emacs-wget))))
 
 (define guile-packages
   (guix-packages
