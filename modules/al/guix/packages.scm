@@ -98,6 +98,7 @@
     (emacs emacs-debbugs
            emacs-hl-todo
            emacs-hydra
+           emacs-ivy
            emacs-markdown-mode
            emacs-pdf-tools
            emacs-smartparens
@@ -114,8 +115,9 @@
 (define guile-packages
   (guix-packages
    (guile guile-2.0
-          guile-xosd
-          guile-daemon)))
+          guile-daemon
+          guile-xosd)
+   (plotutils guile-charting)))
 
 (define font-packages
   (append
@@ -140,8 +142,10 @@
     (pdf zathura
          zathura-pdf-poppler
          zathura-djvu)
+    (graphviz graphviz)
     (imagemagick imagemagick)
-    (audio sox)
+    (audio sox
+           timidity++)
     (video ffmpeg
            mplayer
            mpv
@@ -154,8 +158,10 @@
   (guix-packages
    (linux alsa-utils
           lm-sensors
+          ltrace
           sshfs-fuse
           strace)
+   (man man-pages)
    (emacs emacs)
    (file file)
    (rsync rsync)
