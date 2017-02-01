@@ -1,6 +1,6 @@
 ;;; misc.scm --- Miscellaneous packages
 
-;; Copyright © 2016 Alex Kost
+;; Copyright © 2016–2017 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 13 Aug 2016
@@ -26,6 +26,7 @@
 
 (define-module (al guix packages misc)
   #:use-module (guix packages)
+  #:use-module (gnu packages tv)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system trivial))
 
@@ -54,5 +55,27 @@ loginctl suspend
     (synopsis "Shell script to suspend a system")
     (description "Suspend is a simple wrapper to run 'loginctl suspend'.")
     (license license:gpl3+)))
+
+(define-public my-tvtime
+  (package
+    (inherit tvtime)
+    (name "my-tvtime")
+    (arguments
+     '(#:phases
+       (modify-phases %standard-phases
+         (add-before 'configure 'fix-mute
+           ;; Along with killing/making the sound thread, 'tvtime' also
+           ;; mutes/unmutes "Master" (or another used simple control) on
+           ;; every channel switch.  This is redundant and it leads to
+           ;; unpleasant results: for example, it may leave muted
+           ;; "Master" on exit, also it always resets sound volume to
+           ;; the value that was actual when tvtime was started.  So do
+           ;; not mute the system, killing the sound thread is enough.
+           (lambda _
+             (substitute* "src/mixer.c"
+               (("mixer->mute.*" all)
+                (string-append "/* " all "*/\n"))))))))
+    (synopsis (string-append (package-synopsis tvtime)
+                             " (with proper mute/unmute behavior)"))))
 
 ;;; misc.scm ends here

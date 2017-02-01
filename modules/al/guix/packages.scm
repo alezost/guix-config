@@ -149,10 +149,10 @@
     (video ffmpeg
            mplayer
            mpv
-           youtube-dl)
-    (tv tvtime))
+           youtube-dl))
    (my-packages
-    (image my-sxiv))))
+    (image my-sxiv)
+    (misc my-tvtime))))
 
 (define misc-packages
   (guix-packages
