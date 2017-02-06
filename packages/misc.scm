@@ -30,6 +30,19 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system trivial))
 
+(define-public empty-package
+  (package
+    (name "empty-package")
+    (version "0")
+    (source #f)
+    (build-system trivial-build-system)
+    (arguments '(#:builder (mkdir %output)))
+    (synopsis "Empty package")
+    (description
+     "This package creates its store directory and nothing more.")
+    (home-page #f)
+    (license license:gpl3+)))
+
 (define-public suspend
   (package
     (name "suspend")
