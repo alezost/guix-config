@@ -1,6 +1,6 @@
 ;;; utils.scm --- Guix utilities
 
-;; Copyright © 2015 Alex Kost
+;; Copyright © 2015, 2017 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 26 Sep 2015
@@ -28,7 +28,9 @@
   #:use-module (srfi srfi-1)
   #:use-module (guix profiles)
   #:export (lists-of-packages->manifest
+            guix-package
             guix-packages
+            my-package
             my-packages))
 
 (define-syntax-rule (lists-of-packages->manifest packages ...)
@@ -60,5 +62,13 @@
 
 (define-packages-macro guix-packages gnu packages)
 (define-packages-macro my-packages al guix packages)
+
+(define-syntax-rule (guix-package module-part package)
+  "Return PACKAGE from (gnu packages MODULE-PART) module."
+  (module-package (gnu packages module-part) package))
+
+(define-syntax-rule (my-package module-part package)
+  "Return PACKAGE from (al guix packages MODULE-PART) module."
+  (module-package (al guix packages module-part) package))
 
 ;;; utils.scm ends here
