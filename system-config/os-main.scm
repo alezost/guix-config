@@ -40,7 +40,12 @@
                               (name   "ru_RU.utf8"))))
 
     (bootloader
-     (grub-configuration (device "/dev/sda")
+     ;; Since I always use "guix system build --no-grub", I don't want
+     ;; to build grub, but guix wants to build it anyway (it is done by
+     ;; 'perform-action' procedure in (guix scripts system) module).  So
+     ;; I simply replace the default 'grub' with my 'empty-package'.
+     (grub-configuration (grub (my-package misc empty-package))
+                         (device "/dev/sda")
                          (theme (grub-theme))))
 
     (kernel-arguments
