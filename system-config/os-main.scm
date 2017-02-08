@@ -141,9 +141,9 @@
 
     (packages
      (let ((useless-packages (guix-packages
-                              (linux iw wireless-tools)
+                              (linux iw wireless-tools net-tools rfkill)
                               (nano nano)
-                              (texinfo texinfo)
+                              (texinfo info-reader)
                               (zile zile))))
        (append (guix-packages
                 (admin shadow)
