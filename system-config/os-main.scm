@@ -193,13 +193,16 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
                     #:config-file (local-file
                                    (config-file "lirc/devinput.conf")))
 
-      (dhcp-client-service)
-      ;; (static-networking-service "enp0s7" "192.168.1.32"
-      ;;                            #:gateway "192.168.1.1"
-      ;;                            #:name-servers '("77.88.8.8"))
       (tor-service)
-      (static-networking-service "lo" "127.0.0.1"
-                                 #:provision '(loopback))
+      (dhcp-client-service)
+      (service static-networking-service-type
+               (list ;; (static-networking (interface "enp0s7")
+                     ;;                    (ip "192.168.1.32")
+                     ;;                    (gateway "192.168.1.1")
+                     ;;                    (name-servers '("77.88.8.8")))
+                     (static-networking (interface "lo")
+                                        (ip "127.0.0.1")
+                                        (provision '(loopback)))))
 
       (udisks-service)
       (polkit-service)
