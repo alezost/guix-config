@@ -215,8 +215,12 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (urandom-seed-service)
       (guix-service)
       (nscd-service)
-      (udev-service
-       #:rules (guix-packages
-                (linux lvm2 fuse alsa-utils)))))))
+      (udev-service #:rules (guix-packages
+                             (linux lvm2 fuse alsa-utils)))
+      (service special-files-service-type
+               `(("/bin/sh" ,(file-append (guix-package bash bash)
+                                          "/bin/sh"))
+                 ("/usr/bin/env" ,(file-append (guix-package base coreutils)
+                                               "/bin/env"))))))))
 
 os
