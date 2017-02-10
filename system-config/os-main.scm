@@ -7,6 +7,7 @@
  (gnu services desktop)
  (gnu services ssh)
  (gnu services lirc)
+ (gnu packages base)            ; for 'canonical-package'
  (al places)
  (al files)
  (al utils)
@@ -19,9 +20,9 @@
 (define %host-name "leviafan")
 
 (define %extra-linux-modules
-  '("fuse"              ; for sshfs
-    "sata_nv"           ; for my HDD to be recognized
-    "snd-seq"           ; for MIDI-keyboard
+  '("fuse"                      ; for sshfs
+    "sata_nv"                   ; for my HDD to be recognized
+    "snd-seq"                   ; for MIDI-keyboard
     ))
 
 (define %redundant-linux-modules
@@ -218,9 +219,16 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (udev-service #:rules (guix-packages
                              (linux lvm2 fuse alsa-utils)))
       (service special-files-service-type
-               `(("/bin/sh" ,(file-append (guix-package bash bash)
-                                          "/bin/sh"))
-                 ("/usr/bin/env" ,(file-append (guix-package base coreutils)
-                                               "/bin/env"))))))))
+               ;; Using 'canonical-package' as bash and coreutils
+               ;; canonical packages are already a part of
+               ;; '%base-packages'.
+               `(("/bin/sh"
+                  ,(file-append (canonical-package
+                                 (guix-package bash bash))
+                                "/bin/sh"))
+                 ("/usr/bin/env"
+                  ,(file-append (canonical-package
+                                 (guix-package base coreutils))
+                                "/bin/env"))))))))
 
 os
