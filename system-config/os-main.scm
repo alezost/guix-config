@@ -21,6 +21,7 @@
 
 (define %extra-linux-modules
   '("fuse"                      ; for sshfs
+    "nbd"                       ; to mount qcow2 images
     "sata_nv"                   ; for my HDD to be recognized
     "snd-seq"                   ; for MIDI-keyboard
     ))
