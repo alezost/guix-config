@@ -58,9 +58,8 @@
    (guix-packages
     (xorg xorg-server
           xf86-input-evdev
+          xf86-input-libinput
           xf86-video-fbdev
-          xf86-video-modesetting
-          xf86-video-nv
           xf86-video-nouveau))
    (my-packages
     (x xdaemon))))
