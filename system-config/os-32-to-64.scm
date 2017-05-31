@@ -11,8 +11,7 @@
  (guix packages)
  (gnu packages linux)
  (gnu packages package-management)
- (gnu services base)
- (gnu services dmd))
+ (gnu services base))
 
 (define linux-libre-x86_64
   (package
