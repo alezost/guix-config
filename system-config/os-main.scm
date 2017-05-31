@@ -46,13 +46,17 @@
                               (name   "ru_RU.utf8"))))
 
     (bootloader
-     ;; Since I always use "guix system build --no-grub", I don't want
+     ;; Since I always use "guix system build --no-bootloader", I don't want
      ;; to build grub, but guix wants to build it anyway (it is done by
      ;; 'perform-action' procedure in (guix scripts system) module).  So
      ;; I simply replace the default 'grub' with my 'empty-package'.
-     (grub-configuration (grub (my-package misc empty-package))
-                         (device "/dev/sda")
-                         (theme (grub-theme))))
+     (bootloader-configuration
+      (bootloader (bootloader
+                   (inherit grub-bootloader)
+                   (name 'fake-grub)
+                   (package (my-package misc empty-package))))
+      (device "/dev/sda")
+      (theme (grub-theme))))
 
     (kernel-arguments
      (list (string-append "modprobe.blacklist="
