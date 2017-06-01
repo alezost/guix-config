@@ -31,9 +31,9 @@
 
 (define os
   (operating-system
-    (locale-libcs
-     (cons (guix-package base glibc-2.23)
-           %default-locale-libcs))
+    ;; (locale-libcs
+    ;;  (cons (guix-package base glibc-2.23)
+    ;;        %default-locale-libcs))
 
     (host-name %host-name)
     (timezone "Europe/Moscow")
