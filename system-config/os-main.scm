@@ -156,7 +156,6 @@
                               (texinfo info-reader)
                               (zile zile))))
        (append (guix-packages
-                (admin shadow)
                 (certs nss-certs)
                 (lirc lirc))
                (my-packages
