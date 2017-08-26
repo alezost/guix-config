@@ -1,6 +1,6 @@
 ;;; fonts.scm --- Font packages
 
-;; Copyright © 2014, 2015 Alex Kost
+;; Copyright © 2014, 2015, 2017 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 22 Oct 2014
@@ -9,12 +9,12 @@
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -43,13 +43,13 @@
 (define-public font-symbola
   (package
     (name "font-symbola")
-    (version "9.00")
+    (version "9.17")
     (source (origin
               (method url-fetch)
               (uri "http://users.teilar.gr/~g1951d/Symbola.zip")
               (sha256
                (base32
-                "0d9zrlvzh8inhr17p99banr0dmrvkwxbk3q7zhqqx2z4gf2yavc5"))))
+                "0ay48ygky7hlvhia8192fghifjw281mr9i00399zcqd18kysid6w"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
@@ -73,7 +73,7 @@
                        (copy-file doc
                                   (string-append doc-dir "/"
                                                  (basename doc))))
-                     (find-files "." "\\.docx$|\\.htm$"))))))
+                     (find-files "." "\\.pdf$"))))))
     (native-inputs
      `(("source" ,source)
        ("unzip" ,unzip)))
