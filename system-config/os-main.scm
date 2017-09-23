@@ -229,7 +229,11 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
                `(("/bin/sh"
                   ,(file-append (canonical-package
                                  (guix-package bash bash))
-                                "/bin/sh"))
+                                "/bin/bash"))
+                 ("/bin/bash"
+                  ,(file-append (canonical-package
+                                 (guix-package bash bash))
+                                "/bin/bash"))
                  ("/usr/bin/env"
                   ,(file-append (canonical-package
                                  (guix-package base coreutils))
