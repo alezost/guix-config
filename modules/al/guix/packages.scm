@@ -40,7 +40,7 @@
 
 (define build-common-packages
   (guix-packages
-   (commencement gcc-toolchain-5)
+   (commencement gcc-toolchain-7)
    (base gnu-make)
    (autotools autoconf
               automake
@@ -95,6 +95,7 @@
   (append
    (guix-packages
     (emacs emacs-debbugs
+           emacs-flx
            emacs-hl-todo
            emacs-hydra
            emacs-ivy
@@ -113,9 +114,11 @@
 
 (define guile-packages
   (guix-packages
-   (guile guile-2.0
+   (guile guile-2.2
+          guile-git
           guile-daemon
-          guile-xosd)
+          guile-xosd
+          haunt)
    (plotutils guile-charting)))
 
 (define font-packages
@@ -160,7 +163,9 @@
           ltrace
           sshfs-fuse
           strace)
-   (man man-pages)
+   (man man-db                  ; to set MANPATH on non-GuixSD
+        man-pages)
+   (databases postgresql)
    (emacs emacs)
    (file file)
    (rsync rsync)
@@ -170,6 +175,7 @@
           pinentry)
    (gnuzilla icecat)
    (w3m w3m)
+   (web tidy-html)
    (xml libxslt)
    (curl curl)
    (wget wget)
