@@ -30,7 +30,7 @@
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages xorg)
-  #:use-module (gnu packages zip))
+  #:use-module (gnu packages compression))
 
 (define-public font-alias-pure
   (package
