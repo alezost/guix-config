@@ -56,6 +56,15 @@
            (replace 'patch-exec-paths
              (lambda _
                (with-directory-excursion "lisp"
+                 ;; "magit.el" calls 'magit-startup-asserts' and
+                 ;; 'magit-version' functions in the top level.  I don't
+                 ;; need it at all.
+                 (emacs-batch-edit-file "magit.el"
+                   `(progn (goto-char (point-min))
+                           (re-search-forward "(if after-init-time")
+                           (up-list -1)
+                           (kill-sexp)
+                           (basic-save-buffer)))
                  (emacs-substitute-variables "magit-git.el"
                    ("magit-git-executable" "git"))
                  #t)))))))
