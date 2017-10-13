@@ -67,6 +67,17 @@
                            (basic-save-buffer)))
                  (emacs-substitute-variables "magit-git.el"
                    ("magit-git-executable" "git"))
+
+                 ;; XXX Campaign header was introduced in Magit 2.11.0
+                 ;; and will be removed in the next release:
+                 ;;
+                 ;; https://github.com/magit/magit/commit/bf71241122e1a0bf707913c87493214ceb12f588
+                 ;; https://github.com/magit/magit/commit/4a9d9e59806735100b5d20a8be32defefb659a33
+                 ;;
+                 ;; Change the value of 'magit-hide-campaign-header'
+                 ;; variable since it calls 'git' during initializing.
+                 (emacs-substitute-variables "magit-status.el"
+                   ("magit-hide-campaign-header" 't))
                  #t)))))))
     (inputs '())
     (synopsis (string-append (package-synopsis magit)
