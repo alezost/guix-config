@@ -58,10 +58,6 @@
                (with-directory-excursion "lisp"
                  (emacs-substitute-variables "magit-git.el"
                    ("magit-git-executable" "git"))
-                 (emacs-substitute-variables "magit-process.el"
-                   ;; This crap tries to run "git" to define the
-                   ;; default value (which is nil anyway).
-                   ("magit-need-cygwin-noglob" '()))
                  #t)))))))
     (inputs '())
     (synopsis (string-append (package-synopsis magit)
