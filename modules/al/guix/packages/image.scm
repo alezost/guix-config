@@ -27,6 +27,7 @@
   #:use-module (guix build utils)
   #:use-module (guix utils)
   #:use-module (gnu packages image-viewers)
+  #:use-module (al guix utils)
   #:use-module (al places))
 
 (define-public my-sxiv
@@ -35,6 +36,10 @@
     (name "my-sxiv")
     (arguments
      (substitute-keyword-arguments (package-arguments sxiv)
+       ((#:make-flags flags)
+        ;; Because of the hand-written Makefile, the following overrides
+        ;; the default CFLAGS (which are: "-std=c99 -Wall -pedantic").
+        `(cons ,(cflags) ,flags))
        ((#:phases phases)
         `(modify-phases ,phases
            (add-before 'build 'add-custom-config.h

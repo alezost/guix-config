@@ -28,7 +28,8 @@
   #:use-module (guix packages)
   #:use-module (gnu packages tv)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (guix build-system trivial))
+  #:use-module (guix build-system trivial)
+  #:use-module (al guix utils))
 
 (define-public empty-package
   (package
@@ -74,7 +75,7 @@ loginctl suspend
     (inherit tvtime)
     (name "my-tvtime")
     (arguments
-     '(#:phases
+     `(#:phases
        (modify-phases %standard-phases
          (add-before 'configure 'fix-mute
            ;; Along with killing/making the sound thread, 'tvtime' also
@@ -87,7 +88,9 @@ loginctl suspend
            (lambda _
              (substitute* "src/mixer.c"
                (("mixer->mute.*" all)
-                (string-append "/* " all "*/\n"))))))))
+                (string-append "/* " all "*/\n"))))))
+       ;; #:configure-flags (list "--disable-silent-rules")
+       #:make-flags (list ,(cflags))))
     (synopsis (string-append (package-synopsis tvtime)
                              " (with proper mute/unmute behavior)"))))
 

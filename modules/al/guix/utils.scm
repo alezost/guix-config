@@ -9,12 +9,12 @@
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,11 +27,13 @@
 (define-module (al guix utils)
   #:use-module (srfi srfi-1)
   #:use-module (guix profiles)
+  #:use-module (al utils)
   #:export (lists-of-packages->manifest
             guix-package
             guix-packages
             my-package
-            my-packages))
+            my-packages
+            cflags))
 
 (define-syntax-rule (lists-of-packages->manifest packages ...)
   (packages->manifest
@@ -70,5 +72,13 @@
 (define-syntax-rule (my-package module-part package)
   "Return PACKAGE from (al guix packages MODULE-PART) module."
   (module-package (al guix packages module-part) package))
+
+(define* (cflags #:key (main-flags '("-O2" "-march=native"))
+                       (extra-flags '()))
+  "Return 'CFLAGS=...' string."
+  (string-append "CFLAGS="
+                 (mapconcat identity
+                            (append main-flags extra-flags)
+                            " ")))
 
 ;;; utils.scm ends here
