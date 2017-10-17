@@ -57,6 +57,24 @@
        ,@(substitute-keyword-arguments (package-arguments emms)
            ((#:phases phases)
             `(modify-phases ,phases
+               (add-before 'configure 'patch-Makefile
+                 ;; Do not build man page (for 'emms-print-metadata')
+                 ;; because it is useless and because it makes emms the
+                 ;; only emacs package that provides man pages, which
+                 ;; leads to (re)building a manual database in my emacs
+                 ;; profile after each profile operation.
+                 (lambda _
+                   (substitute* "Makefile"
+                     ;; Remove all lines with 'MAN1DIR'.
+                     ((".*MAN1DIR.*") ""))))
+               (replace 'pre-install
+                 ;; This phase creates "bin" and "man" directories.  I
+                 ;; need only "bin".
+                 (lambda* (#:key outputs #:allow-other-keys)
+                   (let* ((out  (assoc-ref outputs "out"))
+                          (bin  (string-append out "/bin")))
+                     (mkdir-p bin)
+                     #t)))
                (replace 'configure
                  (lambda _ (setenv "SHELL" (which "sh")))))))))
     (inputs `(("taglib" ,taglib)))
