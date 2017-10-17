@@ -25,8 +25,26 @@
   #:use-module (guix packages)
   #:use-module (guix build utils)
   #:use-module (guix utils)
+  #:use-module (guix build-system gnu)
   #:use-module (gnu packages emacs)
-  #:use-module (gnu packages mp3))
+  #:use-module (gnu packages mp3)
+  #:use-module (gnu packages xorg)
+  #:use-module (al guix utils))
+
+(define-public my-emacs
+  (package (inherit emacs)
+    (name "my-emacs")
+    (build-system gnu-build-system)
+    (inputs (append `(("libxaw" ,libxaw)) ; for the Lucid toolkit
+                    (alist-delete "gtk+" (package-inputs emacs))))
+    (arguments
+     (append `(#:configure-flags '("--with-x-toolkit=lucid"
+                                   "--without-gconf"
+                                   "--without-gsettings")
+               #:make-flags (list ,(cflags)))
+             (package-arguments emacs)))
+    (synopsis (string-append (package-synopsis emacs)
+                             " (with my customizations)"))))
 
 (define-public my-emacs-emms
   (package

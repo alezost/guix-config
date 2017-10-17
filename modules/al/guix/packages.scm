@@ -157,47 +157,50 @@
     (misc my-tvtime))))
 
 (define misc-packages
-  (guix-packages
-   (linux alsa-utils
-          lm-sensors
-          ltrace
-          sshfs-fuse
-          strace)
-   (man man-db                  ; to set MANPATH on non-GuixSD
-        man-pages)
-   (databases postgresql)
-   (emacs emacs)
-   (file file)
-   (rsync rsync)
-   (fontutils fontconfig)
-   (glib dbus)
-   (gnupg gnupg
-          pinentry)
-   (gnuzilla icecat)
-   (w3m w3m)
-   (web tidy-html)
-   (xml libxslt)
-   (curl curl)
-   (wget wget)
-   (admin netcat)
-   (ssh openssh)
-   (bittorrent rtorrent)
-   (zip unzip)
-   (dunst dunst)
-   (gtk gtk-engines)            ; standard themes (clearlooks, etc.)
-   (gnome baobab
-          libnotify)            ; for 'notify-send'
+  (append
+   (guix-packages
+    (linux alsa-utils
+           lm-sensors
+           ltrace
+           sshfs-fuse
+           strace)
+    (man man-db                 ; to set MANPATH on non-GuixSD
+         man-pages)
+    (databases postgresql)
+    (emacs emacs)
+    (file file)
+    (rsync rsync)
+    (fontutils fontconfig)
+    (glib dbus)
+    (gnupg gnupg
+           pinentry)
+    (gnuzilla icecat)
+    (w3m w3m)
+    (web tidy-html)
+    (xml libxslt)
+    (curl curl)
+    (wget wget)
+    (admin netcat)
+    (ssh openssh)
+    (bittorrent rtorrent)
+    (zip unzip)
+    (dunst dunst)
+    (gtk gtk-engines)           ; standard themes (clearlooks, etc.)
+    (gnome baobab
+           libnotify)           ; for 'notify-send'
 
-   (version-control git
-                    (git "send-email"))
+    (version-control git
+                     (git "send-email"))
 
-   (gdb gdb)
-   (lisp sbcl)
-   (python python-wrapper)
+    (gdb gdb)
+    (lisp sbcl)
+    (python python-wrapper)
 
-   (aspell aspell
-           aspell-dict-en
-           aspell-dict-ru)))
+    (aspell aspell
+            aspell-dict-en
+            aspell-dict-ru))
+   (my-packages
+    (emacs my-emacs))))
 
 (define unreliable-packages
   ;; Some terrible people use the same URL for different versions of
