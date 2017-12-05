@@ -40,7 +40,7 @@
 
 (define build-common-packages
   (guix-packages
-   (commencement gcc-toolchain-7)
+   (commencement gcc-toolchain)
    (base gnu-make)
    (autotools autoconf
               automake
