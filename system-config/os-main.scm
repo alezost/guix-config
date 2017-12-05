@@ -157,6 +157,7 @@
                               (zile zile))))
        (append (guix-packages
                 (certs nss-certs)
+                (linux iptables)
                 (lirc lirc))
                (my-packages
                 (misc suspend))
