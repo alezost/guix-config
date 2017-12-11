@@ -39,15 +39,15 @@
 ;;; Packages to build things
 
 (define build-common-packages
-  (guix-packages
-   (commencement gcc-toolchain)
-   (base gnu-make)
-   (autotools autoconf
-              automake
-              libtool)
-   (pkg-config pkg-config)
-   (gettext gnu-gettext)
-   (texinfo texinfo)))
+  (specifications->packages
+   "autoconf"
+   "automake"
+   "gcc-toolchain"
+   "gettext"
+   "libtool"
+   "make"
+   "pkg-config"
+   "texinfo"))
 
 
 ;;; GUI
@@ -55,152 +55,140 @@
 (define xorg-packages
   ;; Xorg server and required modules.
   (append
-   (guix-packages
-    (xorg xorg-server
-          xf86-input-evdev
-          xf86-input-libinput
-          xf86-video-fbdev
-          xf86-video-nouveau))
+   (specifications->packages
+    "xorg-server"
+    "xf86-input-evdev"
+    "xf86-input-libinput"
+    "xf86-video-fbdev"
+    "xf86-video-nouveau")
    (my-packages
     (x xdaemon))))
 
 (define xorg-friends-packages
-  (append
-   (guix-packages
-    (xorg setxkbmap
-          xdpyinfo
-          xev
-          xinput
-          xlsfonts
-          xmodmap
-          xprop
-          xrandr
-          xrdb
-          xset
-          xsetroot
-          xterm)
-    (xdisorg wmctrl
-             unclutter
-             slop
-             maim
-             scrot
-             xdpyprobe)
-    (openbox openbox))))
+  (specifications->packages
+   "maim"
+   "openbox"
+   "scrot"
+   "setxkbmap"
+   "slop"
+   "unclutter"
+   "wmctrl"
+   "xdpyinfo"
+   "xdpyprobe"
+   "xev"
+   "xinput"
+   "xlsfonts"
+   "xmodmap"
+   "xprop"
+   "xrandr"
+   "xrdb"
+   "xset"
+   "xsetroot"
+   "xterm"))
 
 
 ;;; Other packages
 
 (define emacs-packages
   ;; Emacs packages, but not Emacs itself.
-  (append
-   (guix-packages
-    (emacs emacs-debbugs
-           emacs-flx
-           emacs-hl-todo
-           emacs-hydra
-           emacs-ivy
-           emacs-markdown-mode
-           emacs-pdf-tools
-           emacs-smartparens
-           emacs-smex
-           geiser
-           git-modes
-           paredit))
-   (my-packages
-    (emacs my-emacs-emms
-           my-emacs-magit
-           my-emacs-w3m
-           my-emacs-wget))))
+  (specifications->packages
+   "emacs-debbugs"
+   "emacs-flx"
+   "emacs-git-modes"
+   "emacs-hl-todo"
+   "emacs-hydra"
+   "emacs-ivy"
+   "emacs-markdown-mode"
+   "emacs-paredit"
+   "emacs-pdf-tools"
+   "emacs-smartparens"
+   "emacs-smex"
+   "geiser"
+   "my-emacs-emms"
+   "my-emacs-magit"
+   "my-emacs-w3m"
+   "my-emacs-wget"))
 
 (define guile-packages
-  (guix-packages
-   (guile guile-2.2
-          guile-git
-          guile-daemon
-          guile-xosd
-          haunt)
-   (plotutils guile-charting)))
+  (specifications->packages
+   "guile"
+   "guile-git"
+   "guile-daemon"
+   "guile-xosd"
+   "haunt"
+   "guile-charting"))
 
 (define font-packages
   (append
-   (guix-packages
-    (xorg font-adobe100dpi
-          font-adobe75dpi
-          ;; font-alias
-          font-misc-misc)
-    (fonts font-adobe-source-han-sans
-           font-dejavu
-           font-ubuntu
-           font-gnu-freefont-ttf
-           font-liberation)
-    (ghostscript gs-fonts))
+   (specifications->packages
+    "font-adobe100dpi"
+    "font-adobe75dpi"
+    "font-misc-misc"
+    "font-adobe-source-han-sans"
+    "font-dejavu"
+    "font-ubuntu"
+    "font-gnu-freefont-ttf"
+    "font-liberation"
+    "gs-fonts")
    (my-packages
     (fonts font-alias-pure
            font-symbola))))
 
 (define multimedia-packages
-  (append
-   (guix-packages
-    (pdf zathura
-         zathura-pdf-poppler
-         zathura-djvu)
-    (graphviz graphviz)
-    (imagemagick imagemagick)
-    (audio sox
-           timidity++)
-    (video ffmpeg
-           mplayer
-           mpv
-           youtube-dl))
-   (my-packages
-    (image my-sxiv)
-    (misc my-tvtime))))
+  (specifications->packages
+   "ffmpeg"
+   "graphviz"
+   "imagemagick"
+   "mplayer"
+   "mpv"
+   "my-sxiv"
+   "my-tvtime"
+   "sox"
+   "timidity++"
+   "youtube-dl"
+   "zathura"
+   "zathura-djvu"
+   "zathura-pdf-poppler"))
 
 (define misc-packages
-  (append
-   (guix-packages
-    (linux alsa-utils
-           lm-sensors
-           ltrace
-           sshfs-fuse
-           strace)
-    (man man-db                 ; to set MANPATH on non-GuixSD
-         man-pages)
-    (databases postgresql)
-    (emacs emacs)
-    (file file)
-    (rsync rsync)
-    (fontutils fontconfig)
-    (glib dbus)
-    (gnupg gnupg
-           pinentry)
-    (gnuzilla icecat)
-    (w3m w3m)
-    (web tidy-html)
-    (xml libxslt)
-    (curl curl)
-    (wget wget)
-    (admin netcat)
-    (ssh openssh)
-    (bittorrent rtorrent)
-    (zip unzip)
-    (dunst dunst)
-    (gtk gtk-engines)           ; standard themes (clearlooks, etc.)
-    (gnome baobab
-           libnotify)           ; for 'notify-send'
-
-    (version-control git
-                     (git "send-email"))
-
-    (gdb gdb)
-    (lisp sbcl)
-    (python python-wrapper)
-
-    (aspell aspell
-            aspell-dict-en
-            aspell-dict-ru))
-   (my-packages
-    (emacs my-emacs))))
+  (specifications->packages
+   "alsa-utils"
+   "aspell"
+   "aspell-dict-en"
+   "aspell-dict-ru"
+   "baobab"
+   "curl"
+   "dbus"
+   "dunst"
+   "file"
+   "fontconfig"
+   "gdb"
+   "git"
+   "git:send-email"
+   "gnupg"
+   "gtk-engines"                ; standard themes (clearlooks, etc.)
+   "icecat"
+   "libnotify"                  ; for 'notify-send'
+   "libxslt"
+   "lm-sensors"
+   "ltrace"
+   "man-db"                     ; to set MANPATH on non-GuixSD
+   "man-pages"
+   "my-emacs"
+   "netcat"
+   "openssh"
+   "pinentry"
+   "postgresql"
+   "python-wrapper"
+   "rsync"
+   "rtorrent"
+   "sbcl"
+   "sshfs-fuse"
+   "strace"
+   "tidy-html"
+   "unzip"
+   "w3m"
+   "wget"))
 
 (define unreliable-packages
   ;; Some terrible people use the same URL for different versions of

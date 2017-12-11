@@ -25,14 +25,18 @@
 ;;; Code:
 
 (define-module (al guix utils)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-11)
   #:use-module (guix profiles)
+  #:use-module (gnu packages)
   #:use-module (al utils)
   #:export (lists-of-packages->manifest
             guix-package
             guix-packages
             my-package
             my-packages
+            specifications->packages
             cflags))
 
 (define-syntax-rule (lists-of-packages->manifest packages ...)
@@ -72,6 +76,19 @@
 (define-syntax-rule (my-package module-part package)
   "Return PACKAGE from (al guix packages MODULE-PART) module."
   (module-package (al guix packages module-part) package))
+
+(define (spec->package spec)
+  "Like `specification->package' but better."
+  (let-values (((package output)
+                (specification->package+output spec)))
+    (match output
+      ("out" package)
+      (_ (list package output)))))
+
+(define-syntax-rule (specifications->packages spec ...)
+  "Return PACKAGES matching SPEC specifications.
+This is a plural form of `specification->package'."
+  (map spec->package (list spec ...)))
 
 (define* (cflags #:key (main-flags '("-O2" "-march=native"))
                        (extra-flags '()))

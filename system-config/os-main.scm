@@ -150,15 +150,11 @@
     (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
     (packages
-     (let ((useless-packages (guix-packages
-                              (linux iw wireless-tools net-tools rfkill)
-                              (nano nano)
-                              (texinfo info-reader)
-                              (zile zile))))
-       (append (guix-packages
-                (certs nss-certs)
-                (linux iptables)
-                (lirc lirc))
+     (let ((useless-packages (specifications->packages
+                              "info-reader" "iw" "nano" "net-tools"
+                              "rfkill" "wireless-tools" "zile")))
+       (append (specifications->packages
+                "nss-certs" "iptables" "lirc")
                (my-packages
                 (misc suspend))
                xorg-packages
@@ -221,8 +217,8 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (urandom-seed-service)
       (guix-service)
       (nscd-service)
-      (udev-service #:rules (guix-packages
-                             (linux lvm2 fuse alsa-utils)))
+      (udev-service #:rules (specifications->packages
+                             "alsa-utils" "fuse" "lvm2"))
       (service special-files-service-type
                ;; Using 'canonical-package' as bash and coreutils
                ;; canonical packages are already a part of
