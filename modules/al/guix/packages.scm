@@ -56,7 +56,7 @@
   ;; Xorg server and required modules.
   (append
    (specifications->packages
-    "xorg-server"
+    "my-xorg-server"
     "xf86-input-evdev"
     "xf86-input-libinput"
     "xf86-video-fbdev"
