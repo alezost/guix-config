@@ -63,10 +63,7 @@
                           (apply comma-separated
                                  %redundant-linux-modules))))
 
-    (initrd (lambda (fs . args)
-              (apply base-initrd fs
-                     #:extra-modules %extra-linux-modules
-                     args)))
+    (initrd-modules (append %extra-linux-modules %base-initrd-modules))
 
     (file-systems
      (cons* (file-system
