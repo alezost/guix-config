@@ -149,7 +149,7 @@
     (packages
      (let ((useless-packages (specifications->packages
                               "info-reader" "iw" "nano" "net-tools"
-                              "rfkill" "wireless-tools" "zile")))
+                              "wireless-tools" "zile")))
        (append (specifications->packages
                 "nss-certs" "iptables" "lirc")
                (my-packages
