@@ -1,6 +1,6 @@
 ;;; utils.scm --- Guix utilities
 
-;; Copyright © 2015, 2017 Alex Kost
+;; Copyright © 2015, 2017, 2018 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 26 Sep 2015
@@ -28,6 +28,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-11)
+  #:use-module (guix packages)
   #:use-module (guix profiles)
   #:use-module (gnu packages)
   #:use-module (al utils)
@@ -37,6 +38,7 @@
             my-package
             my-packages
             specifications->packages
+            remove-packages
             cflags))
 
 (define-syntax-rule (lists-of-packages->manifest packages ...)
@@ -89,6 +91,43 @@
   "Return PACKAGES matching SPEC specifications.
 This is a plural form of `specification->package'."
   (map spec->package (list spec ...)))
+
+(define (remove-packages names-or-packages packages)
+  "Remove NAMES-OR-PACKAGES from PACKAGES."
+
+  (define (name-or-package->proc name-or-package)
+    "Return a function to define if a package matches NAME-OR-PACKAGE."
+    (match name-or-package
+      ((? string? name)
+       (lambda (pkg)
+         (string=? name (package-name pkg))))
+      ((? package? package)
+       (lambda (pkg)
+         (eq? package pkg)))
+      (_ (const #f))))
+
+  (define (reduce-packages matching? packages)
+    "Remove the first (MATCHING? package) from PACKAGES."
+    (let loop ((checked '())
+               (unchecked packages))
+      (if (null? unchecked)
+          checked
+          (match unchecked
+            ((current . rest)
+             (if (matching? current)
+                 (append checked rest)
+                 (loop (cons current checked)
+                       rest)))))))
+
+  (let loop ((names-or-packages names-or-packages)
+             (packages packages))
+    (if (or (null? packages)
+            (null? names-or-packages))
+        packages
+        (let ((matching? (name-or-package->proc
+                          (car names-or-packages))))
+          (loop (cdr names-or-packages)
+                (reduce-packages matching? packages))))))
 
 (define* (cflags #:key (main-flags '("-O2" "-march=native"))
                        (extra-flags '()))

@@ -29,6 +29,14 @@
 (define %redundant-linux-modules
   '("pcspkr" "snd_pcsp"))
 
+(define %redundant-packages
+  '("info-reader"
+    "iw"
+    "nano"
+    "net-tools"
+    "wireless-tools"
+    "zile"))
+
 (define os
   (operating-system
     ;; (locale-libcs
@@ -147,17 +155,13 @@
     (issue "Guix is Great!  Ave Guix!!  Ave!!!\n\n")
 
     (packages
-     (let ((useless-packages (specifications->packages
-                              "info-reader" "iw" "nano" "net-tools"
-                              "wireless-tools" "zile")))
-       (append (specifications->packages
-                "nss-certs" "iptables" "lirc")
-               (my-packages
-                (misc suspend))
-               xorg-packages
-               (remove (lambda (pkg)
-                         (memq pkg useless-packages))
-                       %base-packages))))
+     (append (specifications->packages
+              "nss-certs" "iptables")
+             (my-packages
+              (misc suspend))
+             xorg-packages
+             (remove-packages %redundant-packages
+                              %base-packages)))
 
     (services
      (list
