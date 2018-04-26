@@ -86,35 +86,29 @@
     (inherit magit)
     (name "my-emacs-magit")
     (arguments
-     (substitute-keyword-arguments (package-arguments magit)
-       ((#:phases phases)
-        `(modify-phases ,phases
-           (replace 'patch-exec-paths
-             (lambda _
-               (with-directory-excursion "lisp"
-                 ;; "magit.el" calls 'magit-startup-asserts' and
-                 ;; 'magit-version' functions in the top level.  I don't
-                 ;; need it at all.
-                 (emacs-batch-edit-file "magit.el"
-                   `(progn (goto-char (point-min))
-                           (re-search-forward "(if after-init-time")
-                           (up-list -1)
-                           (kill-sexp)
-                           (basic-save-buffer)))
-                 (emacs-substitute-variables "magit-git.el"
-                   ("magit-git-executable" "git"))
-
-                 ;; XXX Campaign header was introduced in Magit 2.11.0
-                 ;; and will be removed in the next release:
-                 ;;
-                 ;; https://github.com/magit/magit/commit/bf71241122e1a0bf707913c87493214ceb12f588
-                 ;; https://github.com/magit/magit/commit/4a9d9e59806735100b5d20a8be32defefb659a33
-                 ;;
-                 ;; Change the value of 'magit-hide-campaign-header'
-                 ;; variable since it calls 'git' during initializing.
-                 (emacs-substitute-variables "magit-status.el"
-                   ("magit-hide-campaign-header" 't))
-                 #t)))))))
+     `(#:modules ((guix build gnu-build-system)
+                  (guix build utils)
+                  (guix build emacs-utils))
+       #:imported-modules (,@%gnu-build-system-modules
+                           (guix build emacs-utils))
+       ,@(substitute-keyword-arguments (package-arguments magit)
+           ((#:phases phases)
+            `(modify-phases ,phases
+               (replace 'patch-exec-paths
+                 (lambda _
+                   (with-directory-excursion "lisp"
+                     ;; "magit.el" calls 'magit-startup-asserts' and
+                     ;; 'magit-version' functions in the top level.  I don't
+                     ;; need it at all.
+                     (emacs-batch-edit-file "magit.el"
+                       `(progn (goto-char (point-min))
+                               (re-search-forward "(if after-init-time")
+                               (up-list -1)
+                               (kill-sexp)
+                               (basic-save-buffer)))
+                     (emacs-substitute-variables "magit-git.el"
+                       ("magit-git-executable" "git"))
+                     #t))))))))
     (inputs '())
     (synopsis (string-append (package-synopsis magit)
                              " (without git dependency)"))))
