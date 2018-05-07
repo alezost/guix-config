@@ -165,10 +165,16 @@
 
     (services
      (list
+      (service virtual-terminal-service-type)
       (service console-font-service-type
                (map (lambda (tty)
                       (cons tty %default-console-font))
                     '("tty1" "tty2" "tty3" "tty4" "tty5" "tty6")))
+
+      (agetty-service (agetty-configuration
+                       (extra-options '("-L")) ; no carrier detect
+                       (term "vt100")
+                       (tty #f)))
 
       (mingetty-service (mingetty-configuration
                          (tty "tty1")
@@ -215,7 +221,7 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (syslog-service (syslog-configuration
                        (config-file (local-file
                                      (config-file "syslog/syslog.conf")))))
-      (urandom-seed-service)
+      (service urandom-seed-service-type)
       (guix-service)
       (nscd-service)
       (udev-service #:rules (specifications->packages
