@@ -75,34 +75,29 @@
 
     (file-systems
      (cons* (file-system
-              (device "guix")
-              (title 'label)
+              (device (file-system-label "guix"))
               (type "ext4")
               (mount-point "/"))
             (file-system
-              (device "storage")
-              (title 'label)
+              (device (file-system-label "storage"))
               (type "ext4")
               (mount-point "/mnt/storage")
               (create-mount-point? #t)
               (check? #f))
             (file-system
-              (device "arch")
-              (title 'label)
+              (device (file-system-label "arch"))
               (type "ext4")
               (mount-point "/mnt/arch")
               (create-mount-point? #t)
               (check? #f))
             (file-system
-              (device "boot")
-              (title 'label)
+              (device (file-system-label "boot"))
               (type "ext4")
               (mount-point "/mnt/boot")
               (create-mount-point? #t)
               (check? #f))
             (file-system
               (device "/dev/sr0")
-              (title 'device)
               (type "iso9660")
               (mount-point "/mnt/cdrom")
               (mount? #f)
@@ -110,8 +105,7 @@
               (check? #f)
               (options (comma-separated "ro" "user" "noauto")))
             (file-system
-              (device "teXet")
-              (title 'label)
+              (device (file-system-label "teXet"))
               (type "vfat")
               (mount-point "/mnt/texet")
               (mount? #f)

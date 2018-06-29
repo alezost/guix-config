@@ -12,8 +12,7 @@
                    #:extra-modules '("sata_nv") ; for my HDD
                    args)))
   (file-systems (cons (file-system
-                        (device "guix")
-                        (title 'label)
+                        (device (file-system-label "guix"))
                         (mount-point "/")
                         (type "ext4"))
                       %base-file-systems))
