@@ -46,8 +46,9 @@
 
   (kernel linux-libre-x86_64)
 
-  (bootloader
-   (grub-configuration (device "/dev/sda")))
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (target "/dev/sda")))
 
   (file-systems
    (cons* (file-system

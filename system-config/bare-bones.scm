@@ -4,7 +4,9 @@
   (host-name "leviafan")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
-  (bootloader (grub-configuration (device "/dev/sda")))
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (target "/dev/sda")))
   (initrd (lambda (fs . args)
             (apply base-initrd fs
                    #:extra-modules '("sata_nv") ; for my HDD

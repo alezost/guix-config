@@ -63,7 +63,7 @@
                    (inherit grub-bootloader)
                    (name 'fake-grub)
                    (package (my-package misc empty-package))))
-      (device "/dev/sda")
+      (target "/dev/sda")
       (theme (grub-theme))))
 
     (kernel-arguments
