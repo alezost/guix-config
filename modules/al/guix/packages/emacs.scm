@@ -1,6 +1,6 @@
 ;;; emacs.scm --- Emacs packages
 
-;; Copyright © 2015, 2017 Alex Kost <alezost@gmail.com>
+;; Copyright © 2015, 2017–2018 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -124,6 +124,7 @@
            (replace 'patch-exec-paths
              (lambda* (#:key outputs #:allow-other-keys)
                (let ((out (assoc-ref outputs "out")))
+                 (make-file-writable "w3m.el")
                  (emacs-substitute-variables "w3m.el"
                    ("w3m-icon-directory"
                     (string-append out "/share/images/emacs-w3m")))
