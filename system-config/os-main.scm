@@ -211,7 +211,7 @@ Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
       (polkit-service)
       (elogind-service)
       (dbus-service)
-      (lsh-service)
+      (service openssh-service-type (openssh-configuration))
       (syslog-service (syslog-configuration
                        (config-file (local-file
                                      (config-file "syslog/syslog.conf")))))
