@@ -1,6 +1,6 @@
 ;;; packages.scm --- Guix packages I use
 
-;; Copyright © 2015–2017 Alex Kost <alezost@gmail.com>
+;; Copyright © 2015–2018 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -94,6 +94,7 @@
   (specifications->packages
    "emacs-debbugs"
    "emacs-flx"
+   "emacs-geiser"
    "emacs-git-modes"
    "emacs-hl-todo"
    "emacs-hydra"
@@ -103,7 +104,6 @@
    "emacs-pdf-tools"
    "emacs-smartparens"
    "emacs-smex"
-   "geiser"
    "my-emacs-emms"
    "my-emacs-magit"
    "my-emacs-w3m"

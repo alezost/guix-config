@@ -48,13 +48,13 @@
 
 (define-public my-emacs-emms
   (package
-    (inherit emms)
+    (inherit emacs-emms)
     (name "my-emacs-emms")
     (arguments
      `(#:make-flags
        (list (string-append "PREFIX=" %output)
              "CC=gcc")
-       ,@(substitute-keyword-arguments (package-arguments emms)
+       ,@(substitute-keyword-arguments (package-arguments emacs-emms)
            ((#:phases phases)
             `(modify-phases ,phases
                (add-before 'configure 'patch-Makefile
@@ -78,12 +78,12 @@
                (replace 'configure
                  (lambda _ (setenv "SHELL" (which "sh")))))))))
     (inputs `(("taglib" ,taglib)))
-    (synopsis (string-append (package-synopsis emms)
+    (synopsis (string-append (package-synopsis emacs-emms)
                              " (without extra dependencies)"))))
 
 (define-public my-emacs-magit
   (package
-    (inherit magit)
+    (inherit emacs-magit)
     (name "my-emacs-magit")
     (arguments
      `(#:modules ((guix build gnu-build-system)
@@ -91,7 +91,7 @@
                   (guix build emacs-utils))
        #:imported-modules (,@%gnu-build-system-modules
                            (guix build emacs-utils))
-       ,@(substitute-keyword-arguments (package-arguments magit)
+       ,@(substitute-keyword-arguments (package-arguments emacs-magit)
            ((#:phases phases)
             `(modify-phases ,phases
                (replace 'patch-exec-paths
@@ -110,7 +110,7 @@
                        ("magit-git-executable" "git"))
                      #t))))))))
     (inputs '())
-    (synopsis (string-append (package-synopsis magit)
+    (synopsis (string-append (package-synopsis emacs-magit)
                              " (without git dependency)"))))
 
 (define-public my-emacs-w3m
