@@ -93,15 +93,22 @@
   ;; Emacs packages, but not Emacs itself.
   (specifications->packages
    "emacs-debbugs"
+   "emacs-edit-indirect"
+   "emacs-elisp-slime-nav"
+   "emacs-erc-hl-nicks"
    "emacs-flx"
    "emacs-geiser"
    "emacs-git-modes"
+   "emacs-google-translate"
    "emacs-hl-todo"
    "emacs-hydra"
    "emacs-ivy"
    "emacs-markdown-mode"
+   "emacs-package-lint"
    "emacs-paredit"
    "emacs-pdf-tools"
+   "emacs-rainbow-mode"
+   "emacs-shift-number"
    "emacs-smartparens"
    "emacs-smex"
    "my-emacs-emms"
@@ -112,11 +119,14 @@
 (define guile-packages
   (specifications->packages
    "guile"
-   "guile-git"
+   "guile-charting"
+   "guile-chickadee"
    "guile-daemon"
+   "guile-gcrypt"
+   "guile-git"
+   "guile-json"
    "guile-xosd"
-   "haunt"
-   "guile-charting"))
+   "haunt"))
 
 (define font-packages
   (append
@@ -142,7 +152,6 @@
    "mplayer"
    "mpv"
    "my-sxiv"
-   "my-tvtime"
    "sox"
    "timidity++"
    "youtube-dl"
@@ -168,6 +177,7 @@
    "gnupg"
    "gtk-engines"                ; standard themes (clearlooks, etc.)
    "icecat"
+   "iotop"
    "libnotify"                  ; for 'notify-send'
    "libxslt"
    "lm-sensors"
@@ -177,6 +187,8 @@
    "my-emacs"
    "netcat"
    "openssh"
+   "pulseaudio"
+   "pavucontrol"
    "pinentry"
    "postgresql"
    "python-wrapper"
