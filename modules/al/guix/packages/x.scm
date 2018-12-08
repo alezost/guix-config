@@ -1,6 +1,6 @@
 ;;; x.scm --- Packages related to X server
 
-;; Copyright © 2016–2017 Alex Kost
+;; Copyright © 2016–2018 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 22 Feb 2016
@@ -72,7 +72,8 @@
                     (alist-delete "libxfont2"
                                   (package-inputs xorg-server))))
     (arguments
-     (append `(#:make-flags (list ,(cflags)))
+     (append `(#:tests? #f
+               #:make-flags (list ,(cflags)))
              (package-arguments xorg-server)))
     (synopsis (string-append (package-synopsis xorg-server)
                              " (with my customizations)"))))
