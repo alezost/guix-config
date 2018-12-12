@@ -1,6 +1,6 @@
 ;;; fonts.scm --- Font packages
 
-;; Copyright © 2014, 2015, 2017 Alex Kost
+;; Copyright © 2014, 2015, 2017–2018 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 22 Oct 2014
@@ -43,13 +43,13 @@
 (define-public font-symbola
   (package
     (name "font-symbola")
-    (version "9.17")
+    (version "11.00")
     (source (origin
               (method url-fetch)
               (uri "http://users.teilar.gr/~g1951d/Symbola.zip")
               (sha256
                (base32
-                "0ay48ygky7hlvhia8192fghifjw281mr9i00399zcqd18kysid6w"))))
+                "0zaj2bjhfj83z5ryvv7zis7zpzwgksvh1m7yfr3n2bw3a6fwx56m"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
