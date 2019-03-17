@@ -182,7 +182,7 @@
    "libxslt"
    "lm-sensors"
    "ltrace"
-   "man-db"                     ; to set MANPATH on non-GuixSD
+   "man-db"                     ; to set MANPATH on non-GuixOS
    "man-pages"
    "my-emacs"
    "netcat"

@@ -186,7 +186,7 @@
 
       (login-service (login-configuration
                       (motd (plain-file "motd" "\
-Welcome to Hyksos!  I mean GuixOS!  I mean GuixSD!\n\n"))))
+Welcome to Hyksos!  I mean GuixOS!\n\n"))))
 
       (console-keymap-service (local-file
                                (config-file "kbd/dvorak-alt.map")))
