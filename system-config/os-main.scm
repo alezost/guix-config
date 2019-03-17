@@ -124,7 +124,10 @@
              (home-directory (string-append "/home/" %user-name))
              (group %group-name)
              (supplementary-groups
-              '("wheel" "kvm" "audio" "video" "lp" "cdrom")))
+              ;; "input" and "tty" are needed to start X server without
+              ;; root permissions: "input" - to access "/dev/input"
+              ;; devices, "tty" - to access "/dev/ttyN".
+              '("wheel" "kvm" "audio" "video" "input" "tty" "lp" "cdrom")))
             %base-user-accounts))
 
     (groups
