@@ -168,27 +168,29 @@
                       (cons tty %default-console-font))
                     '("tty1" "tty2" "tty3" "tty4" "tty5" "tty6")))
 
-      (agetty-service (agetty-configuration
-                       (extra-options '("-L")) ; no carrier detect
-                       (term "vt100")
-                       (tty #f)))
+      (service agetty-service-type
+               (agetty-configuration
+                (extra-options '("-L"))
+                (term "vt100")
+                (tty #f)))
 
-      (mingetty-service (mingetty-configuration
-                         (tty "tty1")
-                         (auto-login %user-name)))
-      (mingetty-service (mingetty-configuration
-                         (tty "tty2")))
-      (mingetty-service (mingetty-configuration
-                         (tty "tty3")))
-      (mingetty-service (mingetty-configuration
-                         (tty "tty4")))
-      (mingetty-service (mingetty-configuration
-                         (tty "tty5")))
-      (mingetty-service (mingetty-configuration
-                         (tty "tty6")))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty1")
+                                       (auto-login %user-name)))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty2")))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty3")))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty4")))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty5")))
+      (service mingetty-service-type
+               (mingetty-configuration (tty "tty6")))
 
-      (login-service (login-configuration
-                      (motd (plain-file "motd" "\
+      (service login-service-type
+               (login-configuration
+                (motd (plain-file "motd" "\
 Welcome to Hyksos!  I mean GuixOS!\n\n"))))
 
       (console-keymap-service (local-file
@@ -199,8 +201,8 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
                     #:config-file (local-file
                                    (config-file "lirc/devinput.conf")))
 
-      (tor-service)
-      (dhcp-client-service)
+      (service tor-service-type)
+      (service dhcp-client-service-type)
       (service static-networking-service-type
                (list ;; (static-networking (interface "enp0s7")
                      ;;                    (ip "192.168.1.32")
@@ -211,7 +213,7 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
                                         (provision '(loopback)))))
 
       (udisks-service)
-      (polkit-service)
+      (service polkit-service-type)
       (service elogind-service-type
                (elogind-configuration
                 (handle-suspend-key 'ignore)))
@@ -221,10 +223,12 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
                        (config-file (local-file
                                      (config-file "syslog/syslog.conf")))))
       (service urandom-seed-service-type)
-      (guix-service)
-      (nscd-service)
-      (udev-service #:rules (specifications->packages
-                             "alsa-utils" "fuse" "lvm2"))
+      (service guix-service-type)
+      (service nscd-service-type)
+      (service udev-service-type
+               (udev-configuration
+                (rules (specifications->packages
+                        "alsa-utils" "fuse"))))
       (service special-files-service-type
                ;; Using 'canonical-package' as bash and coreutils
                ;; canonical packages are already a part of
