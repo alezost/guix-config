@@ -1,6 +1,6 @@
 # Makefile --- GNU Makefile to build Guile code
 
-# Copyright © 2017 Alex Kost <alezost@gmail.com>
+# Copyright © 2017, 2019 Alex Kost <alezost@gmail.com>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ $(GO_FILES): %.go: %.scm
 	@$(GUILEC_ENV) guild compile $(GUILEC_OPTS) --output=$@ $<
 
 clean:
-	$(RM) -f $(GO_FILES)
+	$(RM) $(GO_FILES)
 
 .PHONY: clean
 
