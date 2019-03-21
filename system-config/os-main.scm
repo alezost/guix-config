@@ -212,7 +212,9 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
 
       (udisks-service)
       (polkit-service)
-      (elogind-service)
+      (service elogind-service-type
+               (elogind-configuration
+                (handle-suspend-key 'ignore)))
       (dbus-service)
       (service openssh-service-type (openssh-configuration))
       (syslog-service (syslog-configuration
