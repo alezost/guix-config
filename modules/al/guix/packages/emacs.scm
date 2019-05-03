@@ -1,6 +1,6 @@
 ;;; emacs.scm --- Emacs packages
 
-;; Copyright © 2015, 2017–2018 Alex Kost <alezost@gmail.com>
+;; Copyright © 2015, 2017–2019 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -100,12 +100,14 @@
                      ;; "magit.el" calls 'magit-startup-asserts' and
                      ;; 'magit-version' functions in the top level.  I don't
                      ;; need it at all.
+                     (make-file-writable "magit.el")
                      (emacs-batch-edit-file "magit.el"
                        `(progn (goto-char (point-min))
                                (re-search-forward "(if after-init-time")
                                (up-list -1)
                                (kill-sexp)
                                (basic-save-buffer)))
+                     (make-file-writable "magit-git.el")
                      (emacs-substitute-variables "magit-git.el"
                        ("magit-git-executable" "git"))
                      #t))))))))
