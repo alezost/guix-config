@@ -1,6 +1,6 @@
 ;;; image.scm --- Image packages
 
-;; Copyright © 2015, 2017 Alex Kost <alezost@gmail.com>
+;; Copyright © 2015, 2017, 2019 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 (define-module (al guix packages image)
   #:use-module (guix gexp)
+  #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (guix build utils)
   #:use-module (guix utils)
@@ -34,18 +35,42 @@
   (package
     (inherit sxiv)
     (name "my-sxiv")
+    ;; In version 25, the author decided to leave only 2 colors to
+    ;; configure instead of 5:
+    ;; <https://github.com/muennich/sxiv/commit/919ada11232781e3624363d834a6b9851c3a2bcb>.
+    ;; Indeed, why do you need any customization at all?  The author
+    ;; knows better what you want!  So I stick to version 24.
+    (version "24")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/muennich/sxiv.git")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "020n1bdxbzqncprh8a4rnjzc4frp335yxbqh5w6dr970f7n5qm8d"))))
     (arguments
-     (substitute-keyword-arguments (package-arguments sxiv)
-       ((#:make-flags flags)
-        ;; Because of the hand-written Makefile, the following overrides
-        ;; the default CFLAGS (which are: "-std=c99 -Wall -pedantic").
-        `(cons ,(cflags) ,flags))
-       ((#:phases phases)
-        `(modify-phases ,phases
-           (add-before 'build 'add-custom-config.h
-             (lambda* (#:key inputs #:allow-other-keys)
-               (let ((config.h (assoc-ref inputs "config.h")))
-                 (copy-file config.h "config.h"))))))))
+     `(#:tests? #f
+       #:make-flags
+       (list (string-append "PREFIX=" %output)
+             "CC=gcc"
+             ;; Because of the hand-written Makefile, my (cflags) overrides
+             ;; the default CFLAGS (which are: "-std=c99 -Wall -pedantic").
+             ,(cflags)
+             ;; Xft.h #includes <ft2build.h> (without ‘freetype2/’).  The sxiv
+             ;; Makefile works around this by hard-coding /usr/include instead.
+             (string-append "DEF_CPPFLAGS=-I"
+                            (assoc-ref %build-inputs "freetype")
+                            "/include/freetype2")
+             "V=1")
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'configure)
+         (add-before 'build 'add-custom-config.h
+           (lambda* (#:key inputs #:allow-other-keys)
+             (let ((config.h (assoc-ref inputs "config.h")))
+               (copy-file config.h "config.h")))))))
     (inputs
      (cons `("config.h" ,(local-file (config-file "sxiv/config.h")))
            (package-inputs sxiv)))
