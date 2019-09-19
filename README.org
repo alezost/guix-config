@@ -1,0 +1,30 @@
+** About
+
+This repository contains my system configuration, packages, services and
+other related stuff for [[http://www.gnu.org/software/guix/][GNU Guix]].  The Guile code that can be found here
+relies on some of my [[https://gitlab.com/alezost-config/guile][guile modules]].
+
+** Files and directories
+
+- [[file:modules][modules]]: This directory contains all guile modules with my additional
+  packages, services and utilities for Guix.  I add this directory to
+  =GUILE_LOAD_PATH= environment variable.
+
+- [[file:guix-package-path][guix-package-path]]: This directory was made specifically for
+  =GUIX_PACKAGE_PATH= environment variable.  It contains
+  [[file:modules/al/guix/packages][al/guix/packages]] symlink which points to my package directory.  Thus,
+  it contains my packages (and _only_ the packages) placed in a proper
+  hierarchy. I did not set =GUIX_PACKAGE_PATH= to the directory with all
+  my guile [[file:modules][modules]] as Guix would traverse all those modules and all
+  variables inside to find the packages, which is long and may find
+  unwanted things.
+
+- [[file:system-config][system-config]]: Directory with system configuration files (for ~guix
+  system~ commands).  My main config is placed in [[file:system-config/os-main.scm][os-main.scm]] file.
+
+- [[file:user-config][user-config]]: Directory with manifest files I use to populate my Guix
+  profiles with ~guix package --profile=… --manifest=…~ shell command
+  (actually, with my [[https://gitlab.com/alezost-config/guile/blob/master/scripts/profile][profile]] script).
+
+- [[file:misc]]: Miscellaneous stuff related to Guix.
+
