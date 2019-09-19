@@ -19,6 +19,16 @@ relies on some of my [[https://gitlab.com/alezost-config/guile][guile modules]].
   variables inside to find the packages, which is long and may find
   unwanted things.
 
+  Also this directory is specified in [[file:.guix-channel]] file, so this
+  repository can be used as a [[https://guix.gnu.org/manual/en/html_node/Channels.html][Guix channel]]. I.e., a channel like the
+  following may be added to [[file:~/.config/guix/channels.scm]] file.
+
+  #+BEGIN_SRC scheme
+  (channel
+    (name 'alezost-channel)
+    (url "https://gitlab.com/alezost-config/guix.git"))
+  #+END_SRC
+
 - [[file:system-config][system-config]]: Directory with system configuration files (for ~guix
   system~ commands).  My main config is placed in [[file:system-config/os-main.scm][os-main.scm]] file.
 
@@ -27,4 +37,3 @@ relies on some of my [[https://gitlab.com/alezost-config/guile][guile modules]].
   (actually, with my [[https://gitlab.com/alezost-config/guile/blob/master/scripts/profile][profile]] script).
 
 - [[file:misc]]: Miscellaneous stuff related to Guix.
-
