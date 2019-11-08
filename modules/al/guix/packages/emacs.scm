@@ -27,6 +27,7 @@
   #:use-module (guix utils)
   #:use-module (guix build-system gnu)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages mp3)
   #:use-module (gnu packages xorg)
   #:use-module (al guix utils))
