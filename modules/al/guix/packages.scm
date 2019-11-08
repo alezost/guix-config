@@ -1,6 +1,6 @@
 ;;; packages.scm --- Guix packages I use
 
-;; Copyright © 2015–2018 Alex Kost <alezost@gmail.com>
+;; Copyright © 2015–2019 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -195,7 +195,7 @@
    "rsync"
    "rtorrent"
    "sbcl"
-   "sshfs-fuse"
+   "sshfs"
    "strace"
    "tidy-html"
    "unzip"
