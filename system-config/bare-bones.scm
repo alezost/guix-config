@@ -1,4 +1,6 @@
-(use-modules (gnu))
+(use-modules
+ (gnu)
+ (al guix services linux))
 
 (operating-system
   (host-name "leviafan")
@@ -23,5 +25,5 @@
                 (home-directory "/home/al"))
                %base-user-accounts))
   (packages %base-packages)
-  (services (cons* (console-keymap-service "dvorak")
+  (services (cons* (service loadkeys-service-type "dvorak")
                    %base-services)))

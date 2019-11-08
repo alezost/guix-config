@@ -29,8 +29,21 @@
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (gnu packages linux)
-  #:export (keycodes-service-type
+  #:export (loadkeys-service-type
+            keycodes-service-type
             keycodes-from-file-service-type))
+
+(define loadkeys-service-type
+  (shepherd-service-type
+   'console-keymap
+   (lambda files
+     (shepherd-service
+      (documentation (string-append "Load console keymap (loadkeys)."))
+      (provision '(console-keymap))
+      (start #~(lambda _
+                 (zero? (system* #$(file-append kbd "/bin/loadkeys")
+                                 #$@files))))
+      (respawn? #f)))))
 
 (define keycodes-service-type
   (shepherd-service-type

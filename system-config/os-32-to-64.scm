@@ -11,7 +11,8 @@
  (guix packages)
  (gnu packages linux)
  (gnu packages package-management)
- (gnu services base))
+ (gnu services base)
+ (al guix services linux))
 
 (define linux-libre-x86_64
   (package
@@ -72,5 +73,5 @@
           %base-packages))
 
   (services
-   (cons* (console-keymap-service "dvorak")
+   (cons* (service loadkeys-service-type "dvorak")
           %services)))

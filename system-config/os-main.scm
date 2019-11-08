@@ -192,8 +192,8 @@
                 (motd (plain-file "motd" "\
 Welcome to Hyksos!  I mean GuixOS!\n\n"))))
 
-      (console-keymap-service (local-file
-                               (config-file "kbd/dvorak-alt.map")))
+      (service loadkeys-service-type
+               (local-file (config-file "kbd/dvorak-alt.map")))
       (service keycodes-from-file-service-type
                (local-file (config-file "kbd/scancodes-msmult")))
 
