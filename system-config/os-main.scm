@@ -6,7 +6,6 @@
  (gnu services dbus)
  (gnu services desktop)
  (gnu services ssh)
- (gnu services lirc)
  (gnu packages base)            ; for 'canonical-package'
  (al places)
  (al files)
@@ -197,9 +196,6 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
                                (config-file "kbd/dvorak-alt.map")))
       (keycodes-from-file-service (local-file
                                    (config-file "kbd/scancodes-msmult")))
-      (lirc-service #:device "name=i2c*" #:driver "devinput"
-                    #:config-file (local-file
-                                   (config-file "lirc/devinput.conf")))
 
       (service tor-service-type)
       (service dhcp-client-service-type)
