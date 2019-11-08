@@ -111,6 +111,7 @@
    "emacs-shift-number"
    "emacs-smartparens"
    "emacs-smex"
+   "emacs-transient"
    "my-emacs-emms"
    "my-emacs-magit"
    "my-emacs-w3m"
@@ -125,6 +126,7 @@
    "guile-gcrypt"
    "guile-git"
    "guile-json"
+   "guile-sqlite3"
    "guile-xosd"
    "haunt"))
 
@@ -168,10 +170,13 @@
    "baobab"
    "curl"
    "dbus"
+   "djvulibre"
    "dunst"
    "file"
    "fontconfig"
    "gdb"
+   "ghostscript"
+   "ghostscript:doc"
    "git"
    "git:send-email"
    "gnupg"
@@ -198,6 +203,7 @@
    "sshfs"
    "strace"
    "tidy-html"
+   "torsocks"
    "unzip"
    "w3m"
    "wget"))
