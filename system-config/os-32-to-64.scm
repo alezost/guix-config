@@ -36,7 +36,8 @@
   ;; Make sure guix-service uses 'guix-x86_64' package.
   (map (lambda (service)
          (if (eqv? 'guix (service-type-name (service-kind service)))
-             (guix-service (guix-configuration (guix guix-x86_64)))
+             (service guix-service-type
+                      (guix-configuration (guix guix-x86_64)))
              service))
        %base-services))
 
