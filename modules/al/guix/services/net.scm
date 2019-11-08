@@ -1,6 +1,6 @@
 ;;; net.scm --- Net services
 
-;; Copyright © 2015 Alex Kost
+;; Copyright © 2015, 2019 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 14 Feb 2015
@@ -9,12 +9,12 @@
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -31,7 +31,7 @@
   #:use-module (guix records)
   #:use-module (gnu packages linux)
   #:use-module (ice-9 match)
-  #:export (net-static-service))
+  #:export (net-static-service-type))
 
 (define-record-type* <net-static>
   net-static make-net-static
@@ -82,19 +82,5 @@
                     (zero? (system* #$ip "link" "set"
                                     "dev" #$interface "down"))))))
          (respawn? #f)))))))
-
-(define* (net-static-service interface ip-address gateway
-                             #:key (name-servers '()))
-  "Return a service that starts @var{interface} with address @var{ip-address}.
-@var{gateway} is a string specifying the default network gateway.
-
-The difference of this service comparing to the one from (gnu services
-networking) module is that it uses commands from 'iproute2' package
-instead of guile networking bindings and 'net-tools' package."
-  (service net-static-service-type
-           (net-static (interface interface)
-                       (ip-address ip-address)
-                       (gateway gateway)
-                       (name-servers name-servers))))
 
 ;;; net.scm ends here

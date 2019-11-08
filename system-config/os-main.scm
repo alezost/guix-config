@@ -194,8 +194,8 @@ Welcome to Hyksos!  I mean GuixOS!\n\n"))))
 
       (console-keymap-service (local-file
                                (config-file "kbd/dvorak-alt.map")))
-      (keycodes-from-file-service (local-file
-                                   (config-file "kbd/scancodes-msmult")))
+      (service keycodes-from-file-service-type
+               (local-file (config-file "kbd/scancodes-msmult")))
 
       (service tor-service-type)
       (service dhcp-client-service-type)
