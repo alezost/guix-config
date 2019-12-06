@@ -27,6 +27,7 @@ MODULES =					\
   $(MODULES_DIR)/al/guix/packages.scm		\
   $(MODULES_DIR)/al/guix/packages/emacs.scm	\
   $(MODULES_DIR)/al/guix/packages/fonts.scm	\
+  $(MODULES_DIR)/al/guix/packages/games.scm	\
   $(MODULES_DIR)/al/guix/packages/image.scm	\
   $(MODULES_DIR)/al/guix/packages/misc.scm	\
   $(MODULES_DIR)/al/guix/packages/x.scm		\
