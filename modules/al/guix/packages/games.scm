@@ -1,6 +1,6 @@
 ;;; games.scm --- Game packages
 
-;; Copyright © 2019 Alex Kost <alezost@gmail.com>
+;; Copyright © 2019–2020 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@
                (setenv "CPATH"
                        (string-append (assoc-ref inputs "sdl-union")
                                       "/include/SDL:"
-                                      (getenv "CPATH")))
+                                      (or (getenv "CPATH") "")))
                #t))
            (add-after 'unpack 'enter-fheroes2-dir
              (lambda _ (chdir "fheroes2") #t))
