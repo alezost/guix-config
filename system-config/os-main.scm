@@ -49,6 +49,8 @@
     (locale-definitions
      (list (locale-definition (source "en_US")
                               (name   "en_US.utf8"))
+           (locale-definition (source "de_DE")
+                              (name   "de_DE.utf8"))
            (locale-definition (source "ru_RU")
                               (name   "ru_RU.utf8"))))
 
