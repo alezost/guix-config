@@ -1,6 +1,6 @@
 ;;; fonts.scm --- Font packages
 
-;; Copyright © 2014, 2015, 2017–2018 Alex Kost
+;; Copyright © 2014, 2015, 2017–2018, 2020 Alex Kost
 
 ;; Author: Alex Kost <alezost@gmail.com>
 ;; Created: 22 Oct 2014
@@ -43,13 +43,13 @@
 (define-public font-symbola
   (package
     (name "font-symbola")
-    (version "11.00")
+    (version "13.00")
     (source (origin
               (method url-fetch)
-              (uri "http://users.teilar.gr/~g1951d/Symbola.zip")
+              (uri "https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip")
               (sha256
                (base32
-                "0zaj2bjhfj83z5ryvv7zis7zpzwgksvh1m7yfr3n2bw3a6fwx56m"))))
+                "101nk6aar67zlqqbzskggbiybjmq4p7d8jc0vnsi789bz67ls0fs"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
@@ -59,16 +59,16 @@
 
          (let ((unzip    (string-append (assoc-ref %build-inputs "unzip")
                                         "/bin/unzip"))
-               (font-dir (string-append %output "/share/fonts/truetype"))
+               (font-dir (string-append %output "/share/fonts/opentype"))
                (doc-dir  (string-append %output "/share/doc/" ,name)))
            (system* unzip (assoc-ref %build-inputs "source"))
            (mkdir-p font-dir)
            (mkdir-p doc-dir)
-           (for-each (lambda (ttf)
-                       (copy-file ttf
+           (for-each (lambda (font)
+                       (copy-file font
                                   (string-append font-dir "/"
-                                                 (basename ttf))))
-                     (find-files "." "\\.ttf$"))
+                                                 (basename font))))
+                     (find-files "." "\\.otf$"))
            (for-each (lambda (doc)
                        (copy-file doc
                                   (string-append doc-dir "/"
@@ -77,7 +77,7 @@
     (native-inputs
      `(("source" ,source)
        ("unzip" ,unzip)))
-    (home-page "http://users.teilar.gr/~g1951d/")
+    (home-page "https://dn-works.com/ufas/")
     (synopsis "Font with many Unicode symbols")
     (description
      "Symbola is a TrueType font providing basic Latin, Greek, Cyrillic and many
