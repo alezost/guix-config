@@ -1,6 +1,6 @@
 ;;; games.scm --- Game packages
 
-;; Copyright © 2019–2020 Alex Kost <alezost@gmail.com>
+;; Copyright © 2019–2021 Alex Kost <alezost@gmail.com>
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,8 +23,9 @@
 
 (define-module (al guix packages games)
   #:use-module (guix packages)
-  #:use-module (guix svn-download)
+  #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
+  #:use-module (guix utils)
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages gettext)
   #:use-module (gnu packages pkg-config)
@@ -55,72 +56,61 @@
   ;;
   ;; Now you can start the game with "cd <dir>; ./fheroes2".
 
-  (let ((svn-revision 3279))    ; there are no releases
-    (package
-      (name "fheroes2")
-      (version (string-append "r" (number->string svn-revision)))
-      (source
-       (origin
-         (method svn-fetch)
-         (uri (svn-reference
-               (url "http://svn.code.sf.net/p/fheroes2/code/trunk")
-               (revision svn-revision)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "0mq53a9algf8zrlfvaj9q99qwwx0fq4r687c3iqb3x74xhbzy8ws"))))
-      (build-system gnu-build-system)
-      (arguments
-       `(#:tests? #f
-         #:make-flags
-         (list
-          ;; Actually, setting WITH_AI here does not work because
-          ;; "empty" AI is hardcoded inside Makefile (fixed by
-          ;; 'patch-Makefile' phase).
-          "WITH_AI=simple"
-          ;; Unfortunately, I cannot use my CFLAGS because the
-          ;; hand-written Makefiles use this ^^^^ environment
-          ;; variable heavily (instead of leaving it for users).
-          ;;
-          ;; ,(cflags)
-          )
-         #:phases
-         (modify-phases %standard-phases
-           (add-after 'set-paths 'set-sdl-paths
-             (lambda* (#:key inputs #:allow-other-keys)
-               (setenv "CPATH"
-                       (string-append (assoc-ref inputs "sdl-union")
-                                      "/include/SDL:"
-                                      (or (getenv "CPATH") "")))
-               #t))
-           (add-after 'unpack 'enter-fheroes2-dir
-             (lambda _ (chdir "fheroes2") #t))
-           (add-after 'enter-fheroes2-dir 'patch-Makefile
-             (lambda _
-               (substitute* "Makefile"
-                 (("WITH_AI=empty") "WITH_AI=simple"))
-               #t))
-           (delete 'configure)  ; no "configure", just "Makefile"
-           (replace 'install ; no "install" target in the hand-written Makefile
-             (lambda* (#:key outputs #:allow-other-keys)
-               (let* ((out (assoc-ref outputs "out"))
-                      (bin (string-append out "/bin")))
-                 (install-file "src/dist/fheroes2" bin)
-                 #t))))))
-      (native-inputs
-       `(("pkg-config" ,pkg-config)
-         ("gettext" ,gettext-minimal)))
-      (inputs
-       `(("freetype" ,freetype)
-         ("sdl-union" ,(sdl-union (list sdl
-                                        sdl-image
-                                        sdl-mixer
-                                        sdl-net
-                                        sdl-ttf)))))
-      (home-page "http://sourceforge.net/projects/fheroes2")
-      (synopsis "Free Heroes2 Engine")
-      (description "@code{Free Heroes2} is an engine recreation of the
+  (package
+    (name "fheroes2")
+    (version "0.8.4")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/ihhub/fheroes2")
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0ynf6d6gz58qjhij08465kfy77cq44jy8sfak8s6qwyjbs89yan4"))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:tests? #f
+       #:make-flags
+       (list
+        "WITH_AI=simple"
+        ;; Unfortunately, I cannot use my CFLAGS because the
+        ;; hand-written Makefiles use this ^^^^ environment
+        ;; variable heavily (instead of leaving it for users).
+        ;;
+        ;; ,(cflags)
+        (string-append "CC=" ,(cc-for-target)))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'set-paths 'set-sdl-paths
+           (lambda* (#:key inputs #:allow-other-keys)
+             (setenv "CPATH"
+                     (string-append (assoc-ref inputs "sdl-union")
+                                    "/include/SDL:"
+                                    (or (getenv "CPATH") "")))
+             #t))
+         (delete 'configure)  ; no "configure", just "Makefile"
+         (replace 'install ; no "install" target in the hand-written Makefile
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (bin (string-append out "/bin")))
+               (install-file "src/dist/fheroes2" bin)
+               #t))))))
+    (native-inputs
+     `(("pkg-config" ,pkg-config)
+       ("gettext" ,gettext-minimal)))
+    (inputs
+     `(("freetype" ,freetype)
+       ("sdl-union" ,(sdl-union (list sdl
+                                      sdl-image
+                                      sdl-mixer
+                                      sdl-net
+                                      sdl-ttf)))))
+    (home-page "https://github.com/ihhub/fheroes2")
+    (synopsis "Free Heroes2 Engine")
+    (description "@code{Free Heroes2} is an engine recreation of the
 game @code{Heroes of Might and Magic II}.")
-      (license license:gpl2+))))
+    (license license:gpl2+)))
 
 ;;; games.scm ends here
